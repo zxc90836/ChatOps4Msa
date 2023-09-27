@@ -31,6 +31,7 @@ service:
 
 capability:
   - get-example-echo_message
+  - get-example-hello_message
   - get-example-math_calculate
   - get-github-service_recent_activity
   - get-github-service_code_scanning
