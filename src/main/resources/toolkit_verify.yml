@@ -36,6 +36,9 @@ toolkit-json-parse:
 toolkit-json-parse_github_commit:
   - json
   - first
+toolkit-json-parse_github_event:
+  - json
+  - first
 toolkit-info-get:
   - system
   - service

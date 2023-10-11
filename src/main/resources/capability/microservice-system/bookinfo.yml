@@ -40,6 +40,7 @@ capability:
   - get-github-issue_progress_timeline
   - set-github-issue
   - get-prometheus-alert_rule
+  - get-github-service_recent_events
   - monitor-prometheus-service_health
   - monitor-prometheus-grafana_overview
   - monitor-prometheus-promql_overview
