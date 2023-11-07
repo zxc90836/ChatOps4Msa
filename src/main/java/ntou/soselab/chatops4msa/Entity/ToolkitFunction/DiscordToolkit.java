@@ -34,7 +34,6 @@ public class DiscordToolkit extends ToolkitFunction {
     public void toolkitDiscordText(String text) {
         jdaService.sendChatOpsChannelMessage(text);
     }
-
     /**
      * blue info message
      */
@@ -81,7 +80,16 @@ public class DiscordToolkit extends ToolkitFunction {
 
         processToolkitDiscordEmbed(title, color, field_json, null, null);
     }
-
+//    public void toolkitDiscordEmbedResult(String title, String color, String field_json, String result) throws ToolkitFunctionException {
+//        // Other logic for processing the Embed message
+//        Color colorObj = parseColor(color);
+//        EmbedBuilder eb = new EmbedBuilder()
+//                .setTitle(title)
+//                .setColor(colorObj)
+//                .addField("Result", result, false); // Include the result in the Embed message
+//
+//        jdaService.sendChatOpsChannelEmbedMessage(eb.build());
+//    }
     /**
      * Embed message with thumbnail
      */
