@@ -86,5 +86,5 @@ toolkit-discord-embed_image:
   - color
   - field_json
   - image
-#toolkit-Get-Value:
-#  - text
+toolkit-discord-get:
+  - text

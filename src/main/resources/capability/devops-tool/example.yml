@@ -29,13 +29,16 @@ low_code:
     - name: get-example-hello_message
       parameter:
         message: text message # get from Discord
-#        answer: ${answer}
+        answer: ${answer}
       description: |
         Just echo a message to Discord hello
       access: public # all users can execute the operation
       body:
+        - toolkit-discord-get:
+            text: getValue
+            assign: value
         - toolkit-discord-text: # return to Discord
-            text: Hello! `${message}`. The answer is  # Include the answer from the previous operation
+            text: Hello! `${message}`. The answer is `${value}`
             assign: custom_variable # Declare a new variable
 
     - name: get-example-math_calculate
