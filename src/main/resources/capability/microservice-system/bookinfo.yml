@@ -21,7 +21,7 @@ service:
     url: http://192.168.100.223:9081
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
-    scan_run_id: 5948042984
+    scan_run_id: 7036397689
 
   - name: ratings
     url: http://192.168.100.223:9082
@@ -41,6 +41,7 @@ capability:
   - set-github-issue
   - get-prometheus-alert_rule
   - get-github-service_recent_events
+#  - get-github-code_network_graph
   - monitor-prometheus-service_health
   - monitor-prometheus-grafana_overview
   - monitor-prometheus-promql_overview
