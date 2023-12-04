@@ -37,12 +37,12 @@ public class DiscordToolkit extends ToolkitFunction {
     public void toolkitDiscordText(String text) {
         double lastResult = mathToolkit.getLastResult();
         String messageWithResult = text + lastResult;
-//        if(lastResult!=0.0){
-//            jdaService.sendChatOpsChannelMessage(messageWithResult);
-//        }
-//        else{
-//            jdaService.sendChatOpsChannelMessage(text);
-//        }
+        if(lastResult!=0.0){
+            jdaService.sendChatOpsChannelMessage(messageWithResult);
+        }
+        else{
+            jdaService.sendChatOpsChannelMessage(text);
+        }
         jdaService.sendChatOpsChannelMessage(text);
     }
 
