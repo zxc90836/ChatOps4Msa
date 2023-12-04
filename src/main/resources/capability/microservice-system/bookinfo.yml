@@ -15,7 +15,7 @@ service:
     url: http://192.168.100.223:9083
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
-    scan_run_id: 5948186556
+    scan_run_id: 7035913677
 
   - name: details
     url: http://192.168.100.223:9081
@@ -27,7 +27,7 @@ service:
     url: http://192.168.100.223:9082
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.
-    scan_run_id: 5948162478
+    scan_run_id: 7086468365
 
 capability:
   - get-example-echo_message
