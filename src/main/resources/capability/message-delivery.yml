@@ -25,7 +25,7 @@ low_code:
             actualValue: $.status
             true:
               - toolkit-discord-info:
-                text: "error need set issue"
+                  text: "error need set issue"
             false:
               - toolkit-discord-info:
-                text: "success"
+                  text: "success"
