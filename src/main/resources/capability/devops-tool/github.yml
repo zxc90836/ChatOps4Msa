@@ -113,6 +113,35 @@ low_code:
                         color: green
                         field_json: ${json}
     #
+    - name: get-github-code_network_graph
+      parameter:
+        service_name: service name
+      description: |
+        Get the network graph.
+      access:
+        protected:
+          - Supervisor
+          - Team_Member
+      body:
+        - toolkit-info-get:
+            system: bookinfo
+            service: ${service_name}
+            info: name
+            assign: service_name_list
+        - toolkit-list-foreach:
+            list: ${service_name_list}
+            element_name: service
+            todo:
+              - set-repo-info_of_service_into_url:
+                  service_name: ${service}
+                  url: https://github.com/<<username>>/<<repo>>/network
+                  assign: url
+              - toolkit-discord-embed_thumbnail:
+                  title: This is the network graph of the ${service} service.
+                  color: green
+                  field_json: "{\"link\": \"${url}\"}"
+                  thumbnail: https://avatars.githubusercontent.com/u/73873468?v=4
+    #
     - name: get-github-service_code_scanning
       parameter:
         service_name: service name
@@ -159,6 +188,54 @@ low_code:
                   title: Get the newest check report of ${service_name}
                   color: orange
                   field_json: "{\"process\": \"${process_url}\", \"code scanning\": \"${result_url}\"}"
+
+    - name: get-github-service_cs_and_is
+      parameter:
+        service_name: service name
+      description: |
+        Get the check report of the newest commit in the service's repo.
+      access:
+        protected:
+          - Supervisor
+          - Team_Member
+      body:
+        - toolkit-info-get:
+            system: bookinfo
+            service: ${service_name}
+            info: name
+            assign: service_name_list
+        - toolkit-list-foreach:
+            list: ${service_name_list}
+            element_name: service_name
+            todo:
+              - toolkit-info-get:
+                  system: bookinfo
+                  service: ${service_name}
+                  info: scan_run_id
+              - toolkit-list-to_string:
+                  list: ${toolkit-info-get}
+                  assign: scan_id
+              - set-repo-info_of_service_into_url:
+                  service_name: ${service_name}
+                  url: https://api.github.com/repos/<<username>>/<<repo>>/actions/runs/${scan_id}/rerun
+                  assign: run_url
+              - set-repo-info_of_service_into_url:
+                  service_name: ${service_name}
+                  url: https://github.com/<<username>>/<<repo>>/actions/runs/${scan_id}
+                  assign: process_url
+              - set-repo-info_of_service_into_url:
+                  service_name: ${service_name}
+                  url: https://github.com/<<username>>/<<repo>>/security/code-scanning
+                  assign: result_url
+              - toolkit-restapi-post:
+                  url: ${run_url}
+                  body: "{}"
+                  authorization: ${github_access_token}
+              - toolkit-discord-embed:
+                  title: Get the newest check report of ${service_name}
+                  color: orange
+                  field_json: "{\"process\": \"${process_url}\", \"code scanning\": \"${result_url}\"}"
+              - receive-github-code_scanning:
 
     - name: get-github-service_past_week_team_activity
       parameter:

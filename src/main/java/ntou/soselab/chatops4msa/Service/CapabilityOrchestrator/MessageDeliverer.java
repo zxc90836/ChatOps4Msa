@@ -100,7 +100,9 @@ public class MessageDeliverer {
 
         // Extract status and result from the message
         String status = messageMap.get("status");
+        String repository = messageMap.get("repository");
         String result = messageMap.get("result");
+
 
         // Check if the status indicates an error and print the result
         if ("failed".equals(status)) {
