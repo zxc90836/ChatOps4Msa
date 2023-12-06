@@ -25,6 +25,9 @@ low_code:
             json: ${event}
             jsonpath: $.repository
             assign: repository
+        - toolkit-extract-service_from_repository:
+            json: ${repository}
+            assign: service
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.result
@@ -36,8 +39,8 @@ low_code:
               - toolkit-discord-info:
                   text: "error need set issue"
               - set-github-issue:
-                  service_name: ${repository}
-                  issue_title: "status:failed"
+                  service_name: ${service}
+                  issue_title: "status failed"
                   issue_message: ${result}
             false:
               - toolkit-discord-info:

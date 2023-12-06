@@ -33,6 +33,8 @@ toolkit-list-async:
 toolkit-json-parse:
   - json
   - jsonpath
+toolkit-extract-service_from_repository:
+  - json
 toolkit-json-parse_github_commit:
   - json
   - first
