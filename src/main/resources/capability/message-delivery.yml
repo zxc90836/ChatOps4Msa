@@ -20,9 +20,10 @@ low_code:
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.status
+            assign: alerts_list
         - toolkit-flow-if_string_match:
             expectedValue: "failed"
-            actualValue: $.status
+            actualValue: ${alerts_list}
             true:
               - toolkit-discord-info:
                   text: "error need set issue"
