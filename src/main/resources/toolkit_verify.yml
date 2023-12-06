@@ -45,6 +45,9 @@ toolkit-info-get:
   - info
 toolkit-flow-if:
   - condition
+toolkit-flow-if_string_match:
+  - expectedValue
+  - actualValue
 toolkit-restapi-get:
   - url
 toolkit-restapi-post:

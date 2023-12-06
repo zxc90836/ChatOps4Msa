@@ -20,18 +20,12 @@ low_code:
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.status
-#        - toolkit-list-is_empty:
-#            list: ${event}
-#            assign: is_success
-#        - toolkit-flow-if:
-#            condition: ${is_success}
-#            true:
-#              - toolkit-discord-info:
-#                text: "error"
-##                - set-github-issue:
-##                  service_name: ${service_name}
-##                  issue_title: "status:failed"
-##                  issue_message: issue message
-#            false:
-#              - toolkit-discord-info:
-#                text: "success"
+        - toolkit-flow-if_string_match:
+            expectedValue: "failed"
+            actualValue: $.status
+            true:
+              - toolkit-discord-info:
+                text: "error need set issue"
+            false:
+              - toolkit-discord-info:
+                text: "success"
