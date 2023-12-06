@@ -103,18 +103,21 @@ public class MessageDeliverer {
         String repository = messageMap.get("repository");
         String result = messageMap.get("result");
 
-        String mention = "@ChatOpsMsa#9519";
-        String userId = "1139460432843771928";
+        String mention = "1139460432843771928";
+        String userId1 = "1139450548685381653";
+        String userId2 = "ChatOpsMsa#9519";
+        String userId3 = "ChatOpsMsa";
         // Check if the status indicates an error and print the result
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
-            jdaService.sendChatOpsChannelMessage("@ChatOpsMsa#9519 set github issue");
-            jdaService.sendChatOpsChannelMessage("<@${1139460432843771928}> set github issue");
-            jdaService.sendChatOpsChannelMessage("@1139450548685381653 set github issue");
-            jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa#9519}> set github issue");
-            jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa}> set github issue");
-            jdaService.sendChatOpsChannelMessage("<@ChatOpsMsa#9519> set github issue");
-            jdaService.sendChatOpsChannelMessage("<@" + userId + "> set github issue");
+            jdaService.sendChatOpsChannelMessage("@" + mention + " set github issue");
+            jdaService.sendChatOpsChannelMessage("@" + userId3 + " set github issue");
+            jdaService.sendChatOpsChannelMessage("@" + userId2 + " set github issue");
+            jdaService.sendChatOpsChannelMessage("@" + userId1 + " set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + mention + "> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + userId3 + "> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + userId2 + "> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + userId1 + "> set github issue");
 
         }
 
