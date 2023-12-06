@@ -5,25 +5,25 @@ info:
     It's a Bookinfo Microservices System, which consists of the Ordering, Payment and Notification services.
 
 service:
-  - name: productpage
+  - name: chatops4msa-bookinfo-productpage
     url: http://192.168.100.35:9080
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Productpage
     description: This is the product page microservice.
     scan_run_id: 5947043944
 
-  - name: reviews
+  - name: chatops4msa-bookinfo-reviews
     url: http://192.168.100.35:9083
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
     scan_run_id: 5947038973
       
-  - name: details
+  - name: chatops4msa-bookinfo-details
     url: http://192.168.100.35:9081
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
     scan_run_id: 5947014232
 
-  - name: ratings
+  - name: chatops4msa-bookinfo-ratings
     url: http://192.168.100.35:9082
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.
@@ -48,3 +48,4 @@ capability:
   - test-k6-smoke_testing_all_service
   - test-custom_test-smoke_and_repo_all_service
   - get-example-new_message
+  - monitor-prometheus-service_error
