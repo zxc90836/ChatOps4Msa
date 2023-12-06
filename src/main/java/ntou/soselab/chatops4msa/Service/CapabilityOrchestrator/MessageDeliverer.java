@@ -104,6 +104,7 @@ public class MessageDeliverer {
         String result = messageMap.get("result");
 
         String mention = "@ChatOpsMsa#9519";
+        String userId = "1139460432843771928";
         // Check if the status indicates an error and print the result
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
@@ -113,7 +114,7 @@ public class MessageDeliverer {
             jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa#9519}> set github issue");
             jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa}> set github issue");
             jdaService.sendChatOpsChannelMessage("<@ChatOpsMsa#9519> set github issue");
-//            jdaService.sendChatOpsChannelMessage("<@${message.author.id}> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + userId + "> set github issue");
 
         }
 
