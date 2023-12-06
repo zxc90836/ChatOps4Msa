@@ -151,13 +151,21 @@ low_code:
             false:
               - toolkit-json-parse:
                     json: ${toolkit-restapi-get} Service Termination
-                    jsonpath: $.data.alerts.labels.name
+                    jsonpath: $.data.alerts
                     assign: alerts_list
-              - toolkit-discord-embed:
-                  title: ${alerts_list} service termination
-                  color: red
-                  field_json: "{\"status\":\"Firing\"}"
-              - get-github-service_recent_activity:
-                  service_name: alerts_list
-                  number_of_activity: 3
+              - toolkit-list-foreach:
+                    list: ${alerts_list}
+                    element_name: labels
+                    todo:
+                      - toolkit-json-parse:
+                            json: ${labels}
+                            jsonpath: $.name
+                            assign: service_name
+                      - toolkit-discord-embed:
+                          title: ${service_name} service termination
+                          color: red
+                          field_json: "{\"status\":\"Firing\"}"
+                      - get-github-service_recent_activity:
+                          service_name: service_name
+                          number_of_activity: 3
 
