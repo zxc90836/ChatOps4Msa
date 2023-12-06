@@ -25,7 +25,7 @@ low_code:
             json: ${event}
             jsonpath: $.repository
             assign: repository
-        - toolkit-extract-service_from_repository:
+        - toolkit-json-extract_service:
             json: ${repository}
             assign: service
         - toolkit-json-parse:
