@@ -29,13 +29,12 @@ public class JsonToolkit extends ToolkitFunction {
     }
 
     public String toolkitJsonExtractService(String repository) {
-        String jsonString = null;
+
         String[] parts = repository.split("/");
-        if (parts.length > 1) {
-            jsonString = parts[parts.length - 1];
-            return jsonString;  // 返回最後一部分
-        }
-        return repository; // 如果不包含/，則返回空字符串
+        int startIndex = repository.lastIndexOf("-") + 1;
+        String service = repository.substring(startIndex).toLowerCase();
+        //System.out.println(service);
+        return service; 
     }
     /**
      * Writing "Github" intentionally instead of "GitHub" is for the convenience of function name conversion.
