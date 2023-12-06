@@ -22,7 +22,7 @@ import java.util.Map;
  * For ease of management, the Lab's network currently utilizes a reverse proxy (NGINX) to expose the services.
  * As a result, DevOps tools can only transmit messages into the Message Queue via HTTP API. (config in GitHub Actions)
  */
-//@Service
+@Service
 public class MessageDeliverer {
     private final CapabilityOrchestrator orchestrator;
     private final JDAService jdaService;
