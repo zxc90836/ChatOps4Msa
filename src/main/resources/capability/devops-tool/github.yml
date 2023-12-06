@@ -235,21 +235,21 @@ low_code:
                   title: Get the newest check report of ${service_name}
                   color: orange
                   field_json: "{\"process\": \"${process_url}\", \"code scanning\": \"${result_url}\"}"
-              - toolkit-list-is_empty:
-                  list: receive-github-code_scanning
-                  assign: is_success
-              - toolkit-flow-if:
-                  condition: ${is_success}
-                  true:
-                    - toolkit-discord-info:
-                        text: "error"
-#                    - set-github-issue:
-#                        service_name: ${service_name}
-#                        issue_title: "status:failed"
-#                        issue_message: issue message
-                  false:
-                    - toolkit-discord-info:
-                        text: "success"
+#              - toolkit-list-is_empty:
+#                  list: receive-github-code_scanning
+#                  assign: is_success
+#              - toolkit-flow-if:
+#                  condition: ${is_success}
+#                  true:
+#                    - toolkit-discord-info:
+#                        text: "error"
+##                    - set-github-issue:
+##                        service_name: ${service_name}
+##                        issue_title: "status:failed"
+##                        issue_message: issue message
+#                  false:
+#                    - toolkit-discord-info:
+#                        text: "success"
     - name: get-github-service_past_week_team_activity
       parameter:
         service_name: service name

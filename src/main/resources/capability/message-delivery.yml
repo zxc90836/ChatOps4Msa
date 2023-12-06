@@ -17,3 +17,18 @@ low_code:
             color: default
             field_json: ${event}
             thumbnail: https://avatars.githubusercontent.com/u/44036562?s=280&v=4
+        - toolkit-list-is_empty:
+            list: ${event}
+            assign: is_success
+        - toolkit-flow-if:
+            condition: ${is_success}
+            true:
+              - toolkit-discord-info:
+                text: "error"
+#                - set-github-issue:
+#                  service_name: ${service_name}
+#                  issue_title: "status:failed"
+#                  issue_message: issue message
+            false:
+              - toolkit-discord-info:
+                text: "success"
