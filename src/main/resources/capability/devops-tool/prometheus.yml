@@ -157,9 +157,16 @@ low_code:
                     list: ${alerts_list}
                     element_name: alert
                     todo:
+                      - toolkit-json-parse:
+                          json: ${alert}
+                          jsonpath: $.labels.name
+                          assign: service_name
                       - toolkit-discord-text:
-                          text: ${alert}
-
+                          text: ${service_name}
+                      - toolkit-discord-embed:
+                          title: ${service_name} service termination
+                          color: red
+                          field_json: "{\"status\":\"Firing\"}"
                       - get-github-service_recent_activity:
                           service_name: service_name
                           number_of_activity: 3
