@@ -36,7 +36,7 @@ low_code:
               - toolkit-discord-info:
                   text: "error need set issue"
               - set-github-issue:
-                  service_name: ${service_name}
+                  service_name: ${repository}
                   issue_title: "status:failed"
                   issue_message: ${result}
             false:
