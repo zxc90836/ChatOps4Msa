@@ -155,12 +155,14 @@ low_code:
                     assign: alerts_list
               - toolkit-list-foreach:
                     list: ${alerts_list}
-                    element_name: labels
+                    element_name: alert
                     todo:
+                      - toolkit-discord-text:
+                          text: ${alert}
                       - toolkit-json-parse:
-                            json: ${labels}
-                            jsonpath: $.name
-                            assign: service_name
+                          json: ${alert}
+                          jsonpath: $.labels.name
+                          assign: service_name
                       - toolkit-discord-embed:
                           title: ${service_name} service termination
                           color: red
