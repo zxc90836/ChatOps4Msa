@@ -107,7 +107,14 @@ public class MessageDeliverer {
         // Check if the status indicates an error and print the result
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
-            jdaService.sendChatOpsChannelMessage(mention + "set github issue");
+            jdaService.sendChatOpsChannelMessage("@ChatOpsMsa#9519 set github issue");
+            jdaService.sendChatOpsChannelMessage("<@${1139460432843771928}> set github issue");
+            jdaService.sendChatOpsChannelMessage("@1139450548685381653 set github issue");
+            jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa#9519}> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@${ChatOpsMsa}> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@ChatOpsMsa#9519> set github issue");
+//            jdaService.sendChatOpsChannelMessage("<@${message.author.id}> set github issue");
+
         }
 
         // perform the capability
