@@ -103,11 +103,11 @@ public class MessageDeliverer {
         String repository = messageMap.get("repository");
         String result = messageMap.get("result");
 
-
+        String mention = "<@1139450548685381653>";
         // Check if the status indicates an error and print the result
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
-            jdaService.sendChatOpsChannelMessage("@ChatOpsMsa set github issue");
+            jdaService.sendChatOpsChannelMessage(mention + "set github issue");
         }
 
         // perform the capability
