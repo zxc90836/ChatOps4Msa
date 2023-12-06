@@ -168,6 +168,6 @@ low_code:
                           color: red
                           field_json: "{\"status\":\"Firing\"}"
                       - get-github-service_recent_activity:
-                          service_name: service_name
+                          service_name: ${service_name}
                           number_of_activity: 3
 
