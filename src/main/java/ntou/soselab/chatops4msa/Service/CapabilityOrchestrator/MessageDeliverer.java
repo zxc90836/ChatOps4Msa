@@ -98,6 +98,15 @@ public class MessageDeliverer {
         argumentMap.put("event", message);
         System.out.println("[Event Arguments] " + messageMap);
 
+        // Extract status and result from the message
+        String status = messageMap.get("status");
+        String result = messageMap.get("result");
+
+        // Check if the status indicates an error and print the result
+        if ("failed".equals(status)) {
+            System.out.println("[######] " + result);
+        }
+
         // perform the capability
         try {
             orchestrator.performTheCapability(triggeredFunction, argumentMap);
