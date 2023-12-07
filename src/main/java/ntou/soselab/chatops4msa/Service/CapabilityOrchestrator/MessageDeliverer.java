@@ -106,6 +106,8 @@ public class MessageDeliverer {
         String userId1 = "1139450548685381653";
         // Check if the status indicates an error and print the result
 
+        String userId2 = "1143813839641645087";
+
 
         // perform the capability
         try {
@@ -121,7 +123,7 @@ public class MessageDeliverer {
         System.out.println();
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
-            jdaService.sendChatOpsChannelMessage("<@" + userId1 + "> set github issue");
+            jdaService.sendChatOpsChannelMessage("<@" + userId2 + "> set github issue");
 
         }
     }
