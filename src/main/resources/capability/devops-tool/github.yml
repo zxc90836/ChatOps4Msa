@@ -349,3 +349,56 @@ low_code:
             replace: ${repository}
         - toolkit-flow-return:
             return: ${toolkit-string-replace}
+    - name: get-github-info_of_service_branch
+      parameter:
+        service_name: service name
+        branch: branch name
+        number_of_activity: 1 <= n <= 5
+      description: |
+        get the service branch info
+      access: public
+      body:
+        - toolkit-string-pattern:
+            string: ${number_of_activity}
+            regex: ^[1-5]$
+            assign: in_range
+        - toolkit-flow-if:
+            condition: ${in_range}
+            false:
+              - toolkit-discord-warning:
+                  text: "[WARNING] sorry, the number of activities must be between 1 and 5."
+        - toolkit-info-get:
+            system: bookinfo
+            service: ${service_name}
+            info: repository
+            assign: service_list
+        - toolkit-list-foreach:
+            list: ${service_list}
+            element_name: service
+            todo:
+              - toolkit-string-split:
+                  string: ${service}
+                  separator: /
+              - toolkit-list-get:
+                  list: ${toolkit-string-split}
+                  index: 3
+                  assign: github_username
+              - toolkit-list-get:
+                  list: ${toolkit-string-split}
+                  index: 4
+                  assign: github_repository
+              - toolkit-restapi-get:
+                  url: ${github_restapi_url}/repos/${github_username}/${github_repository}/commits?sha=${branch}&per_page=${number_of_activity}
+                  assign: response
+              - toolkit-json-parse_github_commit:
+                  json: ${response}
+                  first: ${number_of_activity}
+                  assign: json_list
+              - toolkit-list-foreach:
+                  list: ${json_list}
+                  element_name: json
+                  todo:
+                    - toolkit-discord-embed:
+                        title: "[${i}] The recent activity of ${github_repository}"
+                        color: green
+                        field_json: ${json}
