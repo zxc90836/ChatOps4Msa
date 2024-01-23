@@ -103,12 +103,8 @@ public class MessageDeliverer {
         String repository = messageMap.get("repository");
         String result = messageMap.get("result");
 
-        String userId1 = "1139450548685381653";
         // Check if the status indicates an error and print the result
-
-        String userId2 = "528840709047058432";
-
-
+        String userId = "528840709047058432";
 
         // perform the capability
         try {
@@ -124,7 +120,7 @@ public class MessageDeliverer {
         System.out.println();
         if ("failed".equals(status)) {
             System.out.println("[######] " + result);
-            jdaService.sendChatOpsChannelMessage("<@" + userId2 + "> set github issue");
+            //jdaService.sendChatOpsChannelMessage("<@" + userId + "> set github issue");
 
         }
     }
