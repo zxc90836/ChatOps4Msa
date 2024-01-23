@@ -19,3 +19,4 @@ groups:
         annotations:
           summary: "Container chatops4msa-bookinfo-reviews is down"
           description: "The container chatops4msa-bookinfo-reviews has not been seen for more than 5 minutes."
+

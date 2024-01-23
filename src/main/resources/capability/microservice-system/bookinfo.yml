@@ -31,6 +31,7 @@ service:
 
 capability:
   - get-example-echo_message
+  - get-example-hello_message
   - get-example-math_calculate
   - get-github-service_recent_activity
   - get-github-service_code_scanning
@@ -39,6 +40,8 @@ capability:
   - get-github-issue_progress_timeline
   - set-github-issue
   - get-prometheus-alert_rule
+  - get-github-service_recent_events
+#  - get-github-code_network_graph
   - monitor-prometheus-service_health
   - monitor-prometheus-grafana_overview
   - monitor-prometheus-promql_overview
@@ -50,3 +53,4 @@ capability:
   - get-example-new_message
   - monitor-prometheus-service_error
   - get-github-info_of_service_branch
+  - get-github-service_cs_and_is

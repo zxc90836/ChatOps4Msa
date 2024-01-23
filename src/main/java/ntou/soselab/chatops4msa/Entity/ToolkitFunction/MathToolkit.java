@@ -8,15 +8,23 @@ import java.util.Stack;
 
 @Component
 public class MathToolkit extends ToolkitFunction {
-
+    private double lastResult;//
     /**
      * @param expression like 2 * 3 / 4
      * @return like 1.5
      */
     public String toolkitMathCalculate(String expression) throws ToolkitFunctionException {
+        lastResult = calculate(expression);
         double answer = calculate(expression);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        return decimalFormat.format(answer);
+        //return decimalFormat.format(answer);
+        //System.out.println(lastResult);
+        return decimalFormat.format(lastResult);
+    }
+
+    public double getLastResult() {
+
+        return lastResult; // 返回最後的計算結果
     }
 
     private static double calculate(String expression) {

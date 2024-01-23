@@ -33,7 +33,12 @@ toolkit-list-async:
 toolkit-json-parse:
   - json
   - jsonpath
+toolkit-json-extract_service:
+  - json
 toolkit-json-parse_github_commit:
+  - json
+  - first
+toolkit-json-parse_github_event:
   - json
   - first
 toolkit-info-get:
@@ -42,6 +47,9 @@ toolkit-info-get:
   - info
 toolkit-flow-if:
   - condition
+toolkit-flow-if_string_match:
+  - expectedValue
+  - actualValue
 toolkit-restapi-get:
   - url
 toolkit-restapi-post:
@@ -83,3 +91,5 @@ toolkit-discord-embed_image:
   - color
   - field_json
   - image
+toolkit-discord-get:
+  - text
