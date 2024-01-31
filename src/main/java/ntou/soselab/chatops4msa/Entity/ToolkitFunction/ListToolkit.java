@@ -62,8 +62,16 @@ public class ListToolkit extends ToolkitFunction {
         String[] array;
         try {
             array = objectMapper.readValue(list, String[].class);
-            int i = Integer.parseInt(index);
-            return array[i];
+            if(index.equals("first")){
+                return array[0];
+            }
+            else if(index.equals("last")){
+                return array[array.length-1];
+            }
+            else {
+                int i = Integer.parseInt(index);
+                return array[i];
+            }
         } catch (JsonProcessingException e) {
             throw new ToolkitFunctionException(e.getOriginalMessage());
         }

@@ -25,8 +25,12 @@ low_code:
             json: ${event}
             jsonpath: $.repository
             assign: repository
-        - toolkit-json-extract_service:
-            json: ${repository}
+        - toolkit-string-split:
+            string: ${repository}
+            separator: '-'
+        - toolkit-list-get:
+            list: ${toolkit-string-split}
+            index: last
             assign: service
         - toolkit-json-parse:
             json: ${event}
