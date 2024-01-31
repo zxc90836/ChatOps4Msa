@@ -30,9 +30,7 @@ public class JsonToolkit extends ToolkitFunction {
 
     public String toolkitJsonExtractService(String repository) {
 
-        String[] parts = repository.split("/");
-        int startIndex = repository.lastIndexOf("-") + 1;
-        String service = repository.substring(startIndex).toLowerCase();
+        String service = repository.substring(Integer.parseInt(repository)).toLowerCase();
         //System.out.println(service);
         return service; 
     }
