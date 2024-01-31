@@ -34,6 +34,7 @@ low_code:
             assign: service
         - toolkit-json-extract_service:
             json: ${service}
+            assign: service
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.result

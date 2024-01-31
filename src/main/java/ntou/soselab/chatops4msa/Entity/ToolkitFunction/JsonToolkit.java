@@ -31,7 +31,7 @@ public class JsonToolkit extends ToolkitFunction {
     public String toolkitJsonExtractService(String repository) {
 
         String service = repository.toLowerCase();
-        //System.out.println(service);
+        System.out.println(service);
         return service; 
     }
     /**
