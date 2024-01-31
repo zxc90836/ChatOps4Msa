@@ -28,11 +28,11 @@ public class JsonToolkit extends ToolkitFunction {
         return jsonString;
     }
 
-    public String toolkitJsonExtractService(String repository) {
+    public String toolkitJsonExtractService(String service) {
 
 //        String service = repository.toLowerCase();
 //        System.out.println(service);
-        return repository;
+        return service;
     }
     /**
      * Writing "Github" intentionally instead of "GitHub" is for the convenience of function name conversion.
