@@ -36,7 +36,7 @@ public class JsonToolkit extends ToolkitFunction {
     public String toolkitJsonLowercase(String originalString) {
 
         String lowercaseString = originalString.toLowerCase();
-//        System.out.println(lowercaseString);
+        System.out.println(lowercaseString);
         return lowercaseString;
     }
     /**
