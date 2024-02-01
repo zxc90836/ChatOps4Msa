@@ -45,9 +45,6 @@ low_code:
                   list: ${toolkit-string-split}
                   index: 4
                   assign: github_repository
-              - toolkit-json-lowercase:
-                  json: ${github_repository}
-                  assign: github_repository
               - toolkit-restapi-get:
                   url: ${github_restapi_url}/repos/${github_username}/${github_repository}/commits?per_page=${number_of_activity}
                   assign: response

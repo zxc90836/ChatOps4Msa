@@ -30,12 +30,15 @@ public class JsonToolkit extends ToolkitFunction {
 
     /**
      *
-     * @param originalString "Test"
+     * @param json "Test"
      * @return "test"
      */
-    public String toolkitJsonLowercase(String originalString) {
-
-        String lowercaseString = originalString.toLowerCase();
+    public String toolkitJsonLowercase(String json) {
+//        檢查 originalString 是否為 null
+        if (json == null) {
+            throw new IllegalArgumentException("originalString cannot be null");
+        }
+        String lowercaseString = json.toLowerCase();
         System.out.println(lowercaseString);
         return lowercaseString;
     }

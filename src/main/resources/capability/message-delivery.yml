@@ -34,7 +34,7 @@ low_code:
             assign: service
         - toolkit-json-lowercase:
             json: ${service}
-            assign: lowercaseString
+            assign: service
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.result
