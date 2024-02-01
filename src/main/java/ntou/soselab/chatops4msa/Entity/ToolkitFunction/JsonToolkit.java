@@ -28,11 +28,16 @@ public class JsonToolkit extends ToolkitFunction {
         return jsonString;
     }
 
-    public String toolkitJsonExtractService(String service) {
+    /**
+     *
+     * @param originalString "Test"
+     * @return "test"
+     */
+    public String toolkitJsonLowercase(String originalString) {
 
-        String LowerCaseService = service.toLowerCase();
-//        System.out.println(service);
-        return LowerCaseService;
+        String lowercaseString = originalString.toLowerCase();
+//        System.out.println(lowercaseString);
+        return lowercaseString;
     }
     /**
      * Writing "Github" intentionally instead of "GitHub" is for the convenience of function name conversion.

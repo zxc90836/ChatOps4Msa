@@ -5,25 +5,25 @@ info:
     It's a Bookinfo Microservices System, which consists of the Ordering, Payment and Notification services.
 
 service:
-  - name: Productpage
+  - name: productpage
     url: http://192.168.100.223:9080
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Productpage
     description: This is the product page microservice.
     scan_run_id: 7036556039
 
-  - name: Reviews
+  - name: reviews
     url: http://192.168.100.223:9083
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
     scan_run_id: 7035913677
 
-  - name: Details
+  - name: details
     url: http://192.168.100.223:9081
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
     scan_run_id: 7036397689
 
-  - name: Ratings
+  - name: ratings
     url: http://192.168.100.223:9082
     repository: https://github.com/RogerNaN/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.

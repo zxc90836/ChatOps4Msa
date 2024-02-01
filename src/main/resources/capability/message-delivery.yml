@@ -32,6 +32,9 @@ low_code:
             list: ${toolkit-string-split}
             index: last
             assign: service
+        - toolkit-json-lowercase:
+            json: ${service}
+            assign: service
         - toolkit-json-parse:
             json: ${event}
             jsonpath: $.result
