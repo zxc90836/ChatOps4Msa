@@ -235,21 +235,7 @@ low_code:
                   title: Get the newest check report of ${service_name}
                   color: orange
                   field_json: "{\"process\": \"${process_url}\", \"code scanning\": \"${result_url}\"}"
-#              - toolkit-list-is_empty:
-#                  list: receive-github-code_scanning
-#                  assign: is_success
-#              - toolkit-flow-if:
-#                  condition: ${is_success}
-#                  true:
-#                    - toolkit-discord-info:
-#                        text: "error"
-##                    - set-github-issue:
-##                        service_name: ${service_name}
-##                        issue_title: "status:failed"
-##                        issue_message: issue message
-#                  false:
-#                    - toolkit-discord-info:
-#                        text: "success"
+
     - name: get-github-service_past_week_team_activity
       parameter:
         service_name: service name
@@ -458,6 +444,56 @@ low_code:
                   color: green
                   field_json: "{\"title\": \"${issue_title}\", \"message\": \"${issue_message}\", \"link\": \"${html_url}\"}"
 
+    - name: set-github-issue_sync_trello
+      parameter:
+        service_name: service name
+        issue_title: issue title
+        issue_message: issue message
+        board_id: trello board id
+        list_name: trello list name
+      description: |
+        Create issues in the repo of services with dependency risks.
+      access:
+        protected:
+          - Supervisor
+          - Team_Member
+      body:
+        - toolkit-info-get:
+            system: bookinfo
+            service: ${service_name}
+            info: name
+            assign: service_name_list
+        - toolkit-list-foreach:
+            list: ${service_name_list}
+            element_name: service
+            todo:
+              - set-repo-info_of_service_into_url:
+                  service_name: ${service}
+                  url: https://api.github.com/repos/<<username>>/<<repo>>/issues
+                  assign: url
+              - toolkit-restapi-post:
+                  url: ${url}
+                  body: "{\"title\": \"${issue_title}\", \"body\": \"${issue_message}\"}"
+                  authorization: ${github_access_token}
+                  assign: response
+              - toolkit-json-parse:
+                  json: ${response}
+                  jsonpath: $.html_url
+                  assign: html_url
+              - toolkit-trello-create_card:
+                  board_id: ${board_id}
+                  list_name: ${list_name}
+                  card_name: ${issue_title}
+                  card_desc: ${issue_message}
+              - toolkit-discord-embed:
+                  title: Create a new issue of ${service_name}
+                  color: green
+                  field_json: "{\"title\": \"${issue_title}\", \"message\": \"${issue_message}\", \"link\": \"${html_url}\"}"
+              - toolkit-discord-embed:
+                  title: Create a new card in the ${list_name}
+                  color: green
+                  field_json: "{\"title\": \"${issue_title}\", \"message\": \"${issue_message}\"}"
+
     - name: set-repo-info_of_service_into_url
       parameter:
         service_name: null
@@ -491,6 +527,7 @@ low_code:
             replace: ${repository}
         - toolkit-flow-return:
             return: ${toolkit-string-replace}
+
     - name: get-github-info_of_service_branch
       parameter:
         service_name: service name

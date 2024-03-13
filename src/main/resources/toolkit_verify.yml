@@ -93,3 +93,8 @@ toolkit-discord-embed_image:
   - image
 toolkit-discord-get:
   - text
+toolkit-trello-create_card:
+  - board_id
+  - list_name
+  - card_name
+  - card_desc

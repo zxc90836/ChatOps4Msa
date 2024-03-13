@@ -39,6 +39,7 @@ capability:
   - get-github-contribution_of_team_member
   - get-github-issue_progress_timeline
   - set-github-issue
+  - set-github-issue_sync_trello
   - get-prometheus-alert_rule
   - get-github-service_recent_events
 #  - get-github-code_network_graph
