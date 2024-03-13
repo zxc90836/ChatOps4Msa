@@ -50,4 +50,4 @@ low_code:
                     - set-github-issue:
                         service_name: ${service_name}
                         issue_title: "Rollback Request"
-                        issue_message: "Rollback Request: ${service_name} Service Outage Post-Deployment,"
+                        issue_message: "Rollback Request: ${service_name} Service Outage Post-Deployment."

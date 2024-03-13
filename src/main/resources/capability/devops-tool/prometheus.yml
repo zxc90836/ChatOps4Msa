@@ -170,4 +170,49 @@ low_code:
                       - get-github-service_recent_activity:
                           service_name: ${service_name}
                           number_of_activity: 3
+    - name: use-composite_service-service_error_set_rollback_issue
+      parameter: null
+      description: |
+        Monitor the service error of all the services if service is error set github rollback issue.
+      access: public
+      body:
+        - toolkit-restapi-get:
+            url: ${prometheus_host_url}/api/v1/alerts
+        - toolkit-json-parse:
+            json: ${toolkit-restapi-get}
+            jsonpath: $.data.alerts
+            assign: alerts_list
+        - toolkit-list-is_empty:
+            list: ${alerts_list}
+            assign: is_success
+        - toolkit-flow-if:
+            condition: ${is_success}
+            true:
+              - toolkit-discord-embed:
+                  title: The health status of all the services
+                  color: green
+                  field_json: "{\"status\":\"Inactive\"}"
+            false:
+              - toolkit-json-parse:
+                  json: ${toolkit-restapi-get} Service Termination
+                  jsonpath: $.data.alerts
+                  assign: alerts_list
+              - toolkit-list-foreach:
+                  list: ${alerts_list}
+                  element_name: alert
+                  todo:
+                    - toolkit-json-parse:
+                        json: ${alert}
+                        jsonpath: $.labels.name
+                        assign: service_name
+                    - toolkit-discord-text:
+                        text: ${service_name}
+                    - toolkit-discord-embed:
+                        title: ${service_name} service termination
+                        color: red
+                        field_json: "{\"status\":\"Firing\"}"
+                    - set-github-issue:
+                        service_name: ${service_name}
+                        issue_title: "Rollback Request"
+                        issue_message: "Rollback Request: ${service_name} Service Outage Post-Deployment."
 
