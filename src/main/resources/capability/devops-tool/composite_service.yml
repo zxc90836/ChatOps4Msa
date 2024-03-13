@@ -5,6 +5,8 @@ info:
 
 
 low_code:
+  property:
+    prometheus_host_url: ${secret.prometheus_host_url}
   operation:
     - name: use-composite_service-service_error_set_rollback_issue
       parameter: null
@@ -13,7 +15,7 @@ low_code:
       access: public
       body:
         - toolkit-restapi-get:
-            url: ${secret.prometheus_host_url}/api/v1/alerts
+            url: ${prometheus_host_url}/api/v1/alerts
         - toolkit-json-parse:
             json: ${toolkit-restapi-get}
             jsonpath: $.data.alerts
