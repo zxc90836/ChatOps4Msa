@@ -164,7 +164,7 @@ low_code:
                       - toolkit-discord-text:
                           text: ${service_name}
                       - toolkit-discord-embed:
-                          title: ${service_name} service termination
+                          title: ${service_name} service termination try to set github rollback issue
                           color: red
                           field_json: "{\"status\":\"Firing\"}"
                       - get-github-service_recent_activity:

@@ -16,18 +16,21 @@ service:
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
     scan_run_id: 5947038973
+    deployment_branch: main
 
   - name: chatops4msa-bookinfo-details
     url: http://192.168.100.35:9081
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
     scan_run_id: 5947014232
+    deployment_branch: main
 
   - name: chatops4msa-bookinfo-ratings
     url: http://192.168.100.35:9082
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.
     scan_run_id: 5947028699
+    deployment_branch: main
 
 capability:
   - get-example-echo_message
@@ -54,3 +57,4 @@ capability:
   - monitor-prometheus-service_error
   - get-github-info_of_service_branch
   - get-github-service_cs_and_is
+  - use-composite_service-service_error_set_rollback_issue
