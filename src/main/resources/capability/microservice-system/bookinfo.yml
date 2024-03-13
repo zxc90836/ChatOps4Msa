@@ -50,3 +50,4 @@ capability:
   - get-example-new_message
   - monitor-prometheus-service_error
   - get-github-info_of_service_branch
+  - use-composite_service-service_error_set_rollback_issue
