@@ -19,15 +19,15 @@ groups:
         annotations:
           summary: "Container chatops4msa-bookinfo-reviews is down"
           description: "The container chatops4msa-bookinfo-reviews has not been seen for more than 5 minutes."
-    - name: container_status_checks
-      rules:
-        - alert: ContainerDown
-          expr: count by (container) (container_last_seen <= time() - 60) > 0
-          for: 30s
-          labels:
-            severity: critical
-          annotations:
-            summary: "Container {{ $labels.container }} is down"
-            description: "The container {{ $labels.container }} has not been seen for more than 1 minute."
+  - name: container_status_checks
+    rules:
+      - alert: ContainerDown
+        expr: count by (container) (container_last_seen <= time() - 60) > 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Container {{ $labels.container }} is down"
+          description: "The container {{ $labels.container }} has not been seen for more than 1 minute."
 
 
