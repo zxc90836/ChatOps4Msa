@@ -104,6 +104,14 @@ services:
       - ./rabbitmq/data:/var/lib/rabbitmq
       - /etc/localtime:/etc/localtime:ro
 
+  trello:
+    container_name: chatops4mas-trello
+    build:
+      context: ./trello
+    restart: unless-stopped
+    ports:
+      - 7070:8080
+
 # Bookinfo microservices system ==========================================================
 
   productpage:
