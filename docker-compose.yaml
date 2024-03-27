@@ -108,7 +108,7 @@ services:
     container_name: chatops4mas-trello
     build:
       context: .
-      dockerfile: trello/service/Dockerfile_Trello
+      dockerfile: trello/test/Dockerfile
     ports:
       - 7070:8080
 
