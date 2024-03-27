@@ -1,4 +1,3 @@
-package ntou.soselab.chatops4msa.service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
