@@ -68,10 +68,6 @@ low_code:
               - toolkit-flow-return:
                   return: null
             false:
-              - toolkit-json-parse:
-                    json: ${monitor-prometheus-service_health} Service Termination
-                    jsonpath: $.
-                    assign: alerts_list
               - toolkit-list-foreach:
                   list: ${monitor-prometheus-service_health}
                   element_name: alert
