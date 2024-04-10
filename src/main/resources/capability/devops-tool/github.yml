@@ -449,7 +449,7 @@ low_code:
         service_name: service name
         issue_title: issue title
         issue_message: issue message
-        board_id: trello board id
+        board_id: trello url
         list_name: trello list name
       description: |
         Create issues in the repo of services with dependency risks.
@@ -480,8 +480,15 @@ low_code:
                   json: ${response}
                   jsonpath: $.html_url
                   assign: html_url
+              - toolkit-string-split:
+                  string: ${board_id}
+                  separator: /
+              - toolkit-list-get:
+                  list: ${toolkit-string-split}
+                  index: 4
+                  assign: boardId
               - toolkit-trello-create_card:
-                  board_id: ${board_id}
+                  board_id: boardId
                   list_name: ${list_name}
                   card_name: ${issue_title}
                   card_desc: ${issue_message}

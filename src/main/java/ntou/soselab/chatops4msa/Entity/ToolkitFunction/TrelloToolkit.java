@@ -10,8 +10,7 @@ import java.io.IOException;
 public class TrelloToolkit extends ToolkitFunction {
 
     public void toolkitTrelloCreateCard(String board_id, String list_name, String card_name, String card_desc) throws IOException {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody body = RequestBody.create(mediaType, "boardId=" + board_id +
