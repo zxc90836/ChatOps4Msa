@@ -46,15 +46,15 @@ low_code:
                   title: The health status of all the services
                   color: green
                   field_json: "{\"status\":\"Inactive\"}"
-              - toolkit-flow-return:
-                  return: ${alerts_list}
+              - toolkit-discord-text: # return to Discord
+                  text: service_health message `${alerts_list}`
             false:
               - toolkit-discord-embed:
                   title: The health status of all the services
                   color: red
                   field_json: "{\"status\":\"Firing\"}"
-              - toolkit-flow-return:
-                  return: ${alerts_list}
+              - toolkit-discord-text: # return to Discord
+                  text: service_health message `${alerts_list}`
         - toolkit-discord-text: # return to Discord
             text: service_health message `${alerts_list}`
         - toolkit-flow-return:
