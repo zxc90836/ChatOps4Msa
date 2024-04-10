@@ -25,6 +25,8 @@ low_code:
         - toolkit-discord-text: # return to Discord
             text: you say `${message}`
             assign: custom_variable # Declare a new variable
+        - toolkit-flow-return:
+            return: ${message}
     #newFuntion
     - name: get-example-hello_message
       parameter:
@@ -60,7 +62,9 @@ low_code:
         try to make a new example operation.
       access: public
       body:
+        - get-example-echo_message:
+            message: ${expression}
         - toolkit-discord-text:
-            text: this is a new operation that do nothing
+            text: Can get value from ${get-example-echo_message}
         - toolkit-discord-text:
             text: your input is `${expression}`.
