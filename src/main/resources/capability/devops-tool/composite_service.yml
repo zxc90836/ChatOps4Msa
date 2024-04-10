@@ -23,6 +23,8 @@ low_code:
                   title: The health status of all the services
                   color: green
                   field_json: "{\"status\":\"Inactive\"}"
+              - toolkit-flow-return:
+                  return: null
             false:
               - toolkit-list-foreach:
                   list: ${monitor-prometheus-service_health}
@@ -59,6 +61,8 @@ low_code:
                   title: The health status of all the services
                   color: green
                   field_json: "{\"status\":\"Inactive\"}"
+              - toolkit-flow-return:
+                  return: null
             false:
               - toolkit-list-foreach:
                   list: ${monitor-prometheus-service_health}
