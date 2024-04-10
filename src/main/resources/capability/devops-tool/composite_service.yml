@@ -17,16 +17,12 @@ low_code:
             list: ${monitor-prometheus-service_health}
             assign: is_success
         - toolkit-discord-text:
-            text: ${monitor-prometheus-service_health}
+            text: message is ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
-              - toolkit-discord-embed:
-                  title: The health status of all the services
-                  color: green
-                  field_json: "{\"status\":\"Inactive\"}"
               - toolkit-flow-return:
-                  return: null
+                  return: ${is_success}
             false:
               - toolkit-list-foreach:
                   list: ${monitor-prometheus-service_health}
@@ -57,16 +53,12 @@ low_code:
             list: ${monitor-prometheus-service_health}
             assign: is_success
         - toolkit-discord-text:
-            text: ${monitor-prometheus-service_health}
+            text: message is ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
-              - toolkit-discord-embed:
-                  title: The health status of all the services
-                  color: green
-                  field_json: "{\"status\":\"Inactive\"}"
               - toolkit-flow-return:
-                  return: null
+                  return: ${is_success}
             false:
               - toolkit-list-foreach:
                   list: ${monitor-prometheus-service_health}
