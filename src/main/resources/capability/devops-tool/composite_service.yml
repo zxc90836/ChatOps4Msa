@@ -70,9 +70,10 @@ low_code:
             false:
               - toolkit-json-parse:
                     json: ${monitor-prometheus-service_health} Service Termination
+                    jsonpath: $.
                     assign: alerts_list
               - toolkit-list-foreach:
-                  list: ${alerts_list}
+                  list: ${monitor-prometheus-service_health}
                   element_name: alert
                   todo:
                     - toolkit-json-parse:
