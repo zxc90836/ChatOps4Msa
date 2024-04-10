@@ -16,6 +16,8 @@ low_code:
         - toolkit-list-is_empty:
             list: ${monitor-prometheus-service_health}
             assign: is_success
+        - toolkit-discord-text:
+            text: ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
@@ -54,6 +56,8 @@ low_code:
         - toolkit-list-is_empty:
             list: ${monitor-prometheus-service_health}
             assign: is_success
+        - toolkit-discord-text:
+            text: ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
@@ -64,8 +68,11 @@ low_code:
               - toolkit-flow-return:
                   return: null
             false:
+              - toolkit-json-parse:
+                    json: ${monitor-prometheus-service_health} Service Termination
+                    assign: alerts_list
               - toolkit-list-foreach:
-                  list: ${monitor-prometheus-service_health}
+                  list: ${alerts_list}
                   element_name: alert
                   todo:
                     - toolkit-json-parse:
