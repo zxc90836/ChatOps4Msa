@@ -42,7 +42,7 @@ low_code:
                         service_name: ${service_name}
                         issue_title: "Rollback Request"
                         issue_message: "Rollback Request: ${service_name} Service Outage Post-Deployment."
-    - name: monitor-prometheus-service_error
+    - name: monitor-composite_service-service_error
       parameter: null
       description: |
         Monitor the service error of all the services.

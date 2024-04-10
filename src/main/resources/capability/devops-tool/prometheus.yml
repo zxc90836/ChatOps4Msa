@@ -51,8 +51,8 @@ low_code:
                   title: The health status of all the services
                   color: red
                   field_json: "{\"status\":\"Firing\"}"
-              - toolkit-flow-return:
-                  return: ${alerts_list}
+        - toolkit-flow-return:
+            return: ${alerts_list}
 
     # - name: judge-service-status_color
     #   parameter:

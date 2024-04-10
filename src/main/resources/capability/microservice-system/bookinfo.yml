@@ -54,7 +54,7 @@ capability:
   - test-k6-smoke_testing_all_service
   - test-custom_test-smoke_and_repo_all_service
   - get-example-new_message
-  - monitor-prometheus-service_error
+  - monitor-composite_service-service_error
   - get-github-info_of_service_branch
   - get-github-service_cs_and_is
   - use-composite_service-service_error_set_rollback_issue
