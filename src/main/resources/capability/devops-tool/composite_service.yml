@@ -16,8 +16,6 @@ low_code:
         - toolkit-list-is_empty:
             list: ${monitor-prometheus-service_health}
             assign: is_success
-        - toolkit-discord-text:
-            text: message is ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
@@ -52,8 +50,6 @@ low_code:
         - toolkit-list-is_empty:
             list: ${monitor-prometheus-service_health}
             assign: is_success
-        - toolkit-discord-text:
-            text: message is ${monitor-prometheus-service_health}
         - toolkit-flow-if:
             condition: ${is_success}
             true:
