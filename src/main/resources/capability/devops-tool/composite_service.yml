@@ -5,6 +5,8 @@ info:
 
 
 low_code:
+  property:
+    temp:
   operation:
     - name: use-composite_service-service_error_set_rollback_issue
       parameter: null
@@ -19,6 +21,10 @@ low_code:
         - toolkit-flow-if:
             condition: ${is_success}
             true:
+              - toolkit-discord-embed:
+                  title: The health status of all the services
+                  color: green
+                  field_json: "{\"status\":\"monitor-prometheus-service_health Inactive\"}"
               - toolkit-flow-return:
                   return: ${is_success}
             false:
@@ -53,6 +59,10 @@ low_code:
         - toolkit-flow-if:
             condition: ${is_success}
             true:
+              - toolkit-discord-embed:
+                    title: The health status of all the services
+                    color: green
+                    field_json: "{\"status\":\"monitor-prometheus-service_health Inactive\"}"
               - toolkit-flow-return:
                   return: ${is_success}
             false:
