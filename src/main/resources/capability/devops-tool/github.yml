@@ -488,7 +488,7 @@ low_code:
                   index: 4
                   assign: boardId
               - toolkit-trello-create_card:
-                  board_id: boardId
+                  board_id: ${boardId}
                   list_name: ${list_name}
                   card_name: ${issue_title}
                   card_desc: ${issue_message}
