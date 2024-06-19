@@ -5,8 +5,6 @@ info:
 
 
 low_code:
-  property:
-    temp:
   operation:
     - name: use-composite_service-service_error_set_rollback_issue
       parameter: null
