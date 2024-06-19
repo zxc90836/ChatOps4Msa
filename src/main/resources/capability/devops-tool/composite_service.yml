@@ -68,8 +68,6 @@ low_code:
                   list: ${monitor-prometheus-service_health}
                   element_name: alert
                   todo:
-                    - toolkit-discord-text:
-                        text: ${alert}
                     - toolkit-json-parse:
                         json: ${alert}
                         jsonpath: $.labels.name
