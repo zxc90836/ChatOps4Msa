@@ -68,16 +68,14 @@ low_code:
                   list: ${monitor-prometheus-service_health}
                   element_name: alert
                   todo:
+                    - toolkit-discord-text:
+                        text: ${alert}
                     - toolkit-json-parse:
                         json: ${alert}
                         jsonpath: $.labels.name
                         assign: service_name
                     - toolkit-discord-text:
                         text: ${service_name}
-                    - toolkit-discord-embed:
-                        title: ${service_name} service termination try to set github rollback issue
-                        color: red
-                        field_json: "{\"status\":\"Firing\"}"
                     - get-github-service_recent_activity:
                         service_name: ${service_name}
                         number_of_activity: 3
