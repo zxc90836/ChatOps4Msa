@@ -91,7 +91,7 @@ public class CapabilityOrchestrator {
             // update the arguments
             Map<String, String> argumentMap = function.copyArgumentMap();
             updateInvokedFunctionArguments(argumentMap, functionListLocalVariableMap);
-            System.out.println("------[Arguments] " + argumentMap);
+            System.out.println("---[Arguments] " + argumentMap);
 
             // update the local variable of the function list
             functionListLocalVariableMap.putAll(argumentMap);
