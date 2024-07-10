@@ -138,7 +138,7 @@ public class CapabilityOrchestrator {
             // update the arguments
             Map<String, String> subArgumentMap = invokedFunction.copyArgumentMap();
             updateInvokedFunctionArguments(subArgumentMap, localVariableMap);
-            System.out.println("------[Arguments] " + subArgumentMap);
+            System.out.println("----------[Arguments] " + subArgumentMap);
 
             // update the local variable
             localVariableMap.putAll(subArgumentMap);
@@ -175,6 +175,7 @@ public class CapabilityOrchestrator {
                     System.out.println("toolkit-function invoke");
                     invokeToolkitFunction(invokedFunction, localVariableMap);
                 } catch (ToolkitFunctionException e) {
+
                     e.printStackTrace();
                     throw new ToolkitFunctionException(functionData.getName() + " > " + e.getMessage());
                 }
