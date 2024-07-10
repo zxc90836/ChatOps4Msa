@@ -148,6 +148,7 @@ public class CapabilityOrchestrator {
 
                 // custom-function
                 // invoke
+                System.out.println("custom-function invoke");
                 DeclaredFunction invokedFunctionData = capabilityMap.get(invokedFunctionName);
                 String returnValue = invokeCustomFunction(invokedFunctionData, subArgumentMap);
                 System.out.println("------[Return] " + returnValue);
@@ -171,6 +172,7 @@ public class CapabilityOrchestrator {
 
                 // invoke
                 try {
+                    System.out.println("toolkit-function invoke");
                     invokeToolkitFunction(invokedFunction, localVariableMap);
                 } catch (ToolkitFunctionException e) {
                     e.printStackTrace();
