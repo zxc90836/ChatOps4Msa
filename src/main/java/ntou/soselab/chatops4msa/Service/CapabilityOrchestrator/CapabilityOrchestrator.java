@@ -91,7 +91,7 @@ public class CapabilityOrchestrator {
             // update the arguments
             Map<String, String> argumentMap = function.copyArgumentMap();
             updateInvokedFunctionArguments(argumentMap, functionListLocalVariableMap);
-            System.out.println("---[Arguments] " + argumentMap);
+            System.out.println("------[Arguments] " + argumentMap);
 
             // update the local variable of the function list
             functionListLocalVariableMap.putAll(argumentMap);
@@ -138,7 +138,7 @@ public class CapabilityOrchestrator {
             // update the arguments
             Map<String, String> subArgumentMap = invokedFunction.copyArgumentMap();
             updateInvokedFunctionArguments(subArgumentMap, localVariableMap);
-            System.out.println("----------[Arguments] " + subArgumentMap);
+            System.out.println("------[Arguments] " + subArgumentMap);
 
             // update the local variable
             localVariableMap.putAll(subArgumentMap);
@@ -148,7 +148,6 @@ public class CapabilityOrchestrator {
 
                 // custom-function
                 // invoke
-                System.out.println("custom-function invoke");
                 DeclaredFunction invokedFunctionData = capabilityMap.get(invokedFunctionName);
                 String returnValue = invokeCustomFunction(invokedFunctionData, subArgumentMap);
                 System.out.println("------[Return] " + returnValue);
@@ -172,17 +171,19 @@ public class CapabilityOrchestrator {
 
                 // invoke
                 try {
-                    System.out.println("toolkit-function invoke");
                     invokeToolkitFunction(invokedFunction, localVariableMap);
                 } catch (ToolkitFunctionException e) {
-
                     e.printStackTrace();
                     throw new ToolkitFunctionException(functionData.getName() + " > " + e.getMessage());
                 }
 
                 // special return of todo_list, true_list or false_list function
                 String returnValueOfSpecialParameter = localVariableMap.get("SPECIAL_RETURN");
-                if (returnValueOfSpecialParameter != null) return returnValueOfSpecialParameter;
+
+                if (returnValueOfSpecialParameter != null) {
+                    localVariableMap.remove("SPECIAL_RETURN");
+                    return returnValueOfSpecialParameter;
+                }
 
                 // decide whether to continue invoking the body function
                 if ("toolkit-flow-if".equals(invokedFunctionName)) {

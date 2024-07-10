@@ -8,9 +8,14 @@ git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings.git
 git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Details.git
 cd ChatOps4Msa
 
+# 清理RabbitMQ日誌文件
+sudo rm -rf /home/soselab/workspace/ChatOps4Msa/rabbitmq/data/mnesia/rabbit@*/quorum/rabbit@*/00000002.wal
+
 # close the previous container.
 docker compose down
-
+# 清理 docker 容器
+docker system prune -a -f
+mvn dependency:purge-local-repository
 # modify the permissions of prometheus/data
 sudo chown -R nobody:nogroup prometheus/data
 
