@@ -13,9 +13,6 @@ sudo rm -rf /home/soselab/workspace/ChatOps4Msa/rabbitmq/data/mnesia/rabbit@*/qu
 
 # close the previous container.
 docker compose down
-# 清理 docker 容器
-docker system prune -a -f
-mvn dependency:purge-local-repository
 # modify the permissions of prometheus/data
 sudo chown -R nobody:nogroup prometheus/data
 
