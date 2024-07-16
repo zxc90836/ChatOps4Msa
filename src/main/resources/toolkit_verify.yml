@@ -98,3 +98,5 @@ toolkit-trello-create_card:
   - list_name
   - card_name
   - card_desc
+toolkit-list-parallel_execute:
+  - tasks

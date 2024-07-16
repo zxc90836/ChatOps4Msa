@@ -198,7 +198,7 @@ public class CapabilityOrchestrator {
         return null;
     }
 
-    private void updateInvokedFunctionArguments(Map<String, String> argumentMap, Map<String, String> localVariableMap) {
+    public void updateInvokedFunctionArguments(Map<String, String> argumentMap, Map<String, String> localVariableMap) {
         for (Map.Entry<String, String> entry : argumentMap.entrySet()) {
             String argumentName = entry.getKey();
             String argumentValue = entry.getValue();
@@ -220,8 +220,8 @@ public class CapabilityOrchestrator {
         return actualArgument;
     }
 
-    private void invokeToolkitFunction(InvokedFunction functionData,
-                                       Map<String, String> localVariableMap) throws ToolkitFunctionException {
+    public void invokeToolkitFunction(InvokedFunction functionData,
+                                      Map<String, String> localVariableMap) throws ToolkitFunctionException {
 
 
         String functionName = functionData.getName();
@@ -294,7 +294,7 @@ public class CapabilityOrchestrator {
         int index = 0;
         for (Parameter parameter : parameters) {
             String requiredParameterName = parameter.getName();
-
+            System.out.println("Processing parameter: " + requiredParameterName);//
             if ("localVariableMap".equals(requiredParameterName)) {
                 // in order to special parameter (function list)
                 arguments[index] = localVariableMap;
@@ -306,6 +306,11 @@ public class CapabilityOrchestrator {
                 List<InvokedFunction> todoList = functionData.getTodoList();
                 if (todoList == null) throw new ToolkitFunctionException("todo is null");
                 arguments[index] = todoList;
+
+            } else if ("tasksList".equals(requiredParameterName)) {
+                List<InvokedFunction> tasksList = functionData.getTasksList();
+                if (tasksList == null) throw new ToolkitFunctionException("tasks is null");
+                arguments[index] = tasksList;
 
             } else if ("trueList".equals(requiredParameterName)) {
 //                List<InvokedFunction> trueList = functionData.getTrueList();
@@ -320,7 +325,7 @@ public class CapabilityOrchestrator {
                 arguments[index] = functionData.getFalseList();
 
             } else {
-                throw new ToolkitFunctionException(requiredParameterName + " is null");
+                throw new ToolkitFunctionException(requiredParameterName + " is nulll");
             }
 
             index++;

@@ -9,11 +9,13 @@ import ntou.soselab.chatops4msa.Service.CapabilityOrchestrator.CapabilityOrchest
 import ntou.soselab.chatops4msa.Service.DiscordService.JDAService;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * For ease of invocation by the CapabilityOrchestrator,
@@ -169,5 +171,66 @@ public class ListToolkit extends ToolkitFunction {
 
         // restore the local variable
         localVariableMap.put(element_name, localVariableTemp);
+    }
+
+    public void toolkitListParallelExecute(List<InvokedFunction> tasksList, Map<String, String> localVariableMap) throws ToolkitFunctionException {
+//        for (InvokedFunction task : tasksList) {
+//            try {
+//                System.out.println("Executing task1: " + task.getName());//
+//                orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
+//
+//            } catch (Exception e) {
+//                System.err.println("Error executing task: " + task.getName());
+//                e.printStackTrace();
+//            }
+//        }
+        ExecutorService executorService = Executors.newFixedThreadPool(tasksList.size());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+        try {
+            List<Future<Void>> futures = executorService.invokeAll(tasksList.stream().map(task -> (Callable<Void>) () -> {
+                try {
+//                    String taskName = task.getName();
+//                    LocalDateTime start = LocalDateTime.now();
+//                    System.out.println("Starting task: " + taskName + " at " + dtf.format(start));
+//
+//                    if (taskName.equals("toolkit-string-split")) {
+//                        Thread.sleep(2000); //
+//                        System.out.println("Task A executed after 2 seconds");
+//                    } else if (taskName.equals("toolkit-discord-text")) {
+//                        Thread.sleep(5000); //
+//                        System.out.println("Task B executed after 5 seconds");
+//                    } else {
+//                        System.out.println("Unknown task: " + taskName);
+//                    }
+//                    //orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
+//                    LocalDateTime end = LocalDateTime.now();
+//                    System.out.println("Finished task: " + taskName + " at " + dtf.format(end));
+
+                    orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
+                } catch (Exception e) {
+                    System.err.println("Error executing task: " + task.getName());
+                    e.printStackTrace();
+                }
+                return null;
+            }).collect(Collectors.toList()));
+
+            for (Future<Void> future : futures) {
+                try {
+                    future.get();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new ToolkitFunctionException(e.getMessage());
+                } catch (ExecutionException e) {
+                    throw new ToolkitFunctionException(e.getCause().getMessage());
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new ToolkitFunctionException(e.getMessage());
+        } finally {
+            executorService.shutdown();
+        }
+
     }
 }
