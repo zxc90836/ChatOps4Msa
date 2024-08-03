@@ -188,33 +188,26 @@ public class ListToolkit extends ToolkitFunction {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
         try {
-            List<Future<Void>> futures = executorService.invokeAll(tasksList.stream().map(task -> (Callable<Void>) () -> {
+            // 創建thread任務列表
+            List<Callable<Void>> callables = tasksList.stream().map(task -> (Callable<Void>) () -> {
                 try {
-//                    String taskName = task.getName();
-//                    LocalDateTime start = LocalDateTime.now();
-//                    System.out.println("Starting task: " + taskName + " at " + dtf.format(start));
-//
-//                    if (taskName.equals("toolkit-string-split")) {
-//                        Thread.sleep(2000); //
-//                        System.out.println("Task A executed after 2 seconds");
-//                    } else if (taskName.equals("toolkit-discord-text")) {
-//                        Thread.sleep(5000); //
-//                        System.out.println("Task B executed after 5 seconds");
-//                    } else {
-//                        System.out.println("Unknown task: " + taskName);
-//                    }
-//                    //orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
-//                    LocalDateTime end = LocalDateTime.now();
-//                    System.out.println("Finished task: " + taskName + " at " + dtf.format(end));
-
-                    orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
+                    String threadName = Thread.currentThread().getName();
+                    //int sleepTime = (int) (Math.random() * 10) + 1;
+                    System.out.println("Executing task: " + task.getName() + " in thread: " + threadName + " at " + dtf.format(LocalDateTime.now()));
+                    //System.out.println("Task: " + task.getName() + " will sleep for " + sleepTime + " seconds.");
+                    //Thread.sleep(sleepTime * 1000);
+                    // 使用 orchestrator 處理單個 task
+                    orchestrator.invokeSpecialParameter(Collections.singletonList(task), localVariableMap);
+                    System.out.println("Finished task: " + task.getName() + " in thread: " + threadName + " at " + dtf.format(LocalDateTime.now()));
                 } catch (Exception e) {
                     System.err.println("Error executing task: " + task.getName());
                     e.printStackTrace();
                 }
                 return null;
-            }).collect(Collectors.toList()));
-
+            }).collect(Collectors.toList());
+            // 並行處理
+            List<Future<Void>> futures = executorService.invokeAll(callables);
+            // 等待所有任務完成
             for (Future<Void> future : futures) {
                 try {
                     future.get();
@@ -231,6 +224,5 @@ public class ListToolkit extends ToolkitFunction {
         } finally {
             executorService.shutdown();
         }
-
     }
 }

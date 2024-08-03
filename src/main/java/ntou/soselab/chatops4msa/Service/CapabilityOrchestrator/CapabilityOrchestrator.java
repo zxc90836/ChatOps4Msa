@@ -44,6 +44,11 @@ public class CapabilityOrchestrator {
         // get function data
         DeclaredFunction functionData = capabilityMap.get(functionName);
 
+        // 檢查 functionData 是否為 null
+        if (functionData == null) {
+            throw new ToolkitFunctionException("functionData is null for functionName: " + functionName);
+        }
+
         // Check the role of the user, the "public" keyword is ignored.
         AccessPermission access = functionData.getAccess();
         String accessType = access.getAccess();

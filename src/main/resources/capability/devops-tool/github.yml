@@ -524,62 +524,19 @@ low_code:
             list: ${service_name_list}
             element_name: service
             todo:
-              - toolkit-discord-text: # return to Discord
-                  text: Hi
-#                  assign: custom_variable # Declare a new variable
               - toolkit-list-parallel_execute:
                   tasks:
-                    - toolkit-string-split:
-                        string: ${board_id}
-                        separator: /
-                    - toolkit-discord-text:
-                        text: Task execution complete.
-#                    - name: create_trello_card
-#                      steps:
-#                        - toolkit-string-split:
-#                            string: ${board_id}
-#                            separator: /
-#                        - toolkit-list-get:
-#                            list: ${toolkit-string-split}
-#                            index: 4
-#                            assign: boardId
-#                        - toolkit-trello-create_card:
-#                            board_id: ${boardId}
-#                            list_name: ${list_name}
-#                            card_name: ${issue_title}
-#                            card_desc: ${issue_message}
-#                        - toolkit-discord-embed:
-#                            title: "Created a new Trello card for ${service}"
-#                            color: green
-#                            field_json: |
-#                              {
-#                                "title": "${issue_title}",
-#                                "message": "${issue_message}"
-#                              }
-#                    - name: create_github_issue
-#                      steps:
-#                        - set-repo-info_of_service_into_url:
-#                            service_name: ${service}
-#                            url: https://api.github.com/repos/<<username>>/<<repo>>/issues
-#                            assign: url
-#                        - toolkit-restapi-post:
-#                            url: ${url}
-#                            body: "{\"title\": \"${issue_title}\", \"body\": \"${issue_message}\"}"
-#                            authorization: ${github_access_token}
-#                            assign: github_response
-#                        - toolkit-json-parse:
-#                            json: ${github_response}
-#                            jsonpath: $.html_url
-#                            assign: html_url
-#                        - toolkit-discord-embed:
-#                            title: "Created a new GitHub issue for ${service}"
-#                            color: green
-#                            field_json: |
-#                              {
-#                                "title": "${issue_title}",
-#                                "message": "${issue_message}",
-#                                "link": "${html_url}"
-#                              }
+                    - get-github-service_recent_events:
+                        service_name: ${service_name}
+                        number_of_activity: 1
+                    - set-github-issue:
+                        service_name: ${service_name}
+                        issue_title: ${issue_title}
+                        issue_message: ${issue_message}
+                    - get-github-service_recent_activity:
+                        service_name: ${service_name}
+                        number_of_activity: 1
+
 
     - name: set-repo-info_of_service_into_url
       parameter:
