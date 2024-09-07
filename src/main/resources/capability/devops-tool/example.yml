@@ -50,8 +50,11 @@ low_code:
         Perform calculations using the given mathematical expression.
       access: public
       body:
+        - toolkit-flow-value_to_local:
+            value: ${expression}
+            assign: number
         - toolkit-math-calculate:
-            expression: ${expression}
+            expression: ${number}
             assign: answer
         - toolkit-discord-text:
             text: the answer of `${expression}` is `${answer}`

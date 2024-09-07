@@ -13,8 +13,11 @@ low_code:
       access: public
       body:
         - monitor-prometheus-service_health: null
+        - toolkit-flow-value_to_local:
+            value: ${monitor-prometheus-service_health}
+            assign: server_list
         - toolkit-list-is_empty:
-            list: ${monitor-prometheus-service_health}
+            list: ${server_list}
             assign: is_success
         - toolkit-flow-if:
             condition: ${is_success}
@@ -27,7 +30,7 @@ low_code:
                   return: ${is_success}
             false:
               - toolkit-list-foreach:
-                  list: ${monitor-prometheus-service_health}
+                  list: ${server_list}
                   element_name: alert
                   todo:
                     - toolkit-json-parse:
@@ -51,8 +54,11 @@ low_code:
       access: public
       body:
         - monitor-prometheus-service_health: null
+        - toolkit-flow-value_to_local:
+            value: ${monitor-prometheus-service_health}
+            assign: server_list
         - toolkit-list-is_empty:
-            list: ${monitor-prometheus-service_health}
+            list: ${server_list}
             assign: is_success
         - toolkit-flow-if:
             condition: ${is_success}
@@ -65,7 +71,7 @@ low_code:
                   return: ${is_success}
             false:
               - toolkit-list-foreach:
-                  list: ${monitor-prometheus-service_health}
+                  list: ${server_list}
                   element_name: alert
                   todo:
                     - toolkit-json-parse:

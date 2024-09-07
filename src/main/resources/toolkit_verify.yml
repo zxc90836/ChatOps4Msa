@@ -50,6 +50,8 @@ toolkit-flow-if:
 toolkit-flow-if_string_match:
   - expectedValue
   - actualValue
+toolkit-flow-value_to_local:
+  - value
 toolkit-restapi-get:
   - url
 toolkit-restapi-post:

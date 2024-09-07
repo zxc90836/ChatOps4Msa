@@ -40,4 +40,7 @@ public class FlowToolkit extends ToolkitFunction {
             orchestrator.invokeSpecialParameter(falseList, localVariableMap);
         }
     }
+    public <T> T toolkitFlowValueToLocal(T value) throws ToolkitFunctionException{
+        return value;
+    }
 }
