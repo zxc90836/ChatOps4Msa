@@ -28,13 +28,19 @@ public class JsonToolkit extends ToolkitFunction {
         return jsonString;
     }
 
-    public String toolkitJsonExtractService(String repository) {
-
-        String[] parts = repository.split("/");
-        int startIndex = repository.lastIndexOf("-") + 1;
-        String service = repository.substring(startIndex).toLowerCase();
-        //System.out.println(service);
-        return service; 
+    /**
+     *
+     * @param json "Test"
+     * @return "test"
+     */
+    public String toolkitJsonLowercase(String json) {
+//        檢查 originalString 是否為 null
+        if (json == null) {
+            throw new IllegalArgumentException("originalString cannot be null");
+        }
+        String lowercaseString = json.toLowerCase();
+        System.out.println(lowercaseString);
+        return lowercaseString;
     }
     /**
      * Writing "Github" intentionally instead of "GitHub" is for the convenience of function name conversion.

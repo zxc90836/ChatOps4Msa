@@ -33,7 +33,7 @@ toolkit-list-async:
 toolkit-json-parse:
   - json
   - jsonpath
-toolkit-json-extract_service:
+toolkit-json-lowercase:
   - json
 toolkit-json-parse_github_commit:
   - json
@@ -95,3 +95,10 @@ toolkit-discord-embed_image:
   - image
 toolkit-discord-get:
   - text
+toolkit-trello-create_card:
+  - board_id
+  - list_name
+  - card_name
+  - card_desc
+toolkit-list-parallel_execute:
+  - tasks

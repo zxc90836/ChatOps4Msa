@@ -34,7 +34,8 @@ public class DiscordToolkit extends ToolkitFunction {
     /**
      * general text message
      */
-    public void toolkitDiscordText(String text) {
+    public void toolkitDiscordText(String text) throws InterruptedException {
+        //Thread.sleep(5000);
         double lastResult = mathToolkit.getLastResult();
         String messageWithResult = text + lastResult;
 //        if(lastResult!=0.0){

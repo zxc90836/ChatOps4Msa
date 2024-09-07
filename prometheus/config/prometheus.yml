@@ -16,8 +16,7 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.100.35:8081']
 
-        labels:
-          group: 'cadvisor'
+
 
 alerting:
   alertmanagers:

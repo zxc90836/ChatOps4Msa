@@ -6,6 +6,7 @@ git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Productpage.git
 git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Reviews.git
 git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings.git
 git clone git@github.com:zxc90836/ChatOps4Msa-Sample-Bookinfo-Details.git
+
 cd ChatOps4Msa
 
 # 清理RabbitMQ日誌文件

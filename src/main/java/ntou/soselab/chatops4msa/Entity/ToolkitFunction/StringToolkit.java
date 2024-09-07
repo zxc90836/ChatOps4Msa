@@ -26,7 +26,8 @@ public class StringToolkit extends ToolkitFunction {
      * @param separator like "/"
      * @return like ["https:", "", "github.com", "sheng-kai-wang", "ChatOps4Msa-Sample-Bookinfo"]
      */
-    public String toolkitStringSplit(String string, String separator) throws ToolkitFunctionException {
+    public String toolkitStringSplit(String string, String separator) throws ToolkitFunctionException, InterruptedException {
+        //Thread.sleep(2000);
         string = string.replaceAll("\\[\"", "").replaceAll("\"]", "");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
