@@ -1,0 +1,40 @@
+info:
+  version: 1.0.0
+  title: sonarqube
+  description: SonarQube is an open-source platform used for continuous inspection of code quality.
+
+
+low_code:
+  property:
+    sonarqube_token: ${secret.sonarqube_token}
+  operation:
+    - name: get-sonarqube-technical_debt
+      parameter:
+        project_name: project name
+      description: get project technical debt by SonarQube
+      access: public
+      body:
+        - toolkit-restapi-auth_get:
+            url: http://localhost:9000/api/measures/component?component=${project_name}&metricKeys=sqale_index,sqale_debt_ratio
+            api_token: ${sonarqube_token}
+            assign: response
+        - toolkit-json-parse:
+            json: ${response}
+            jsonpath: $.component.measures
+            assign: measures_data
+        - toolkit-discord-text:
+            text: ${project_name}
+        - toolkit-list-foreach:
+            list: ${measures_data}
+            element_name: data
+            todo:
+              - toolkit-json-parse:
+                  json: ${data}
+                  jsonpath: $.metric
+                  assign: metric_name
+              - toolkit-json-parse:
+                  json: ${data}
+                  jsonpath: $.value
+                  assign: value
+              - toolkit-discord-text:
+                  text: ${metric_name}：${value}
