@@ -15,7 +15,7 @@ low_code:
       access: public
       body:
         - toolkit-restapi-auth_get:
-            url: http://localhost:9000/api/measures/component?component=${project_name}&metricKeys=sqale_index,sqale_debt_ratio
+            url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/measures/component?component=${project_name}&metricKeys=sqale_index,sqale_debt_ratio
             api_token: ${sonarqube_token}
             assign: response
         - toolkit-json-parse:
