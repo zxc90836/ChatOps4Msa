@@ -38,3 +38,41 @@ low_code:
                   assign: value
               - toolkit-discord-text:
                   text: ${metric_name}：${value}
+    - name: get-sonarqube-microservice_quality
+      parameter:
+        micro_service_name: micro_service_name
+      description: get microservice quality by sonarqube and gpt
+      access: public
+      body:
+        # all service
+        - toolkit-info-get:
+            system: ${micro_service_name}
+            service: all_service
+            info: sonarqube_project
+            assign: sonarqube_project_list
+        - toolkit-flow-value_to_local:
+            value: 你是一位資深 DevOps 工程師，負責分析一組屬於同一系統微服務架構的 SonarQube 代碼品質報告。\n我從 SonarQube API 中取得以下指標：ncloc, bugs, vulnerabilities, coverage, code_smells, sqale_index, sqale_debt_ratio。\n每個微服務對應一個 SonarQube 專案，請根據這些資料協助我生成一份整體性的品質分析報告。\n\n請輸出以下內容：\n1️⃣ 微服務品質總表（每項指標列出，簡單排版，避免使用 Markdown 表格）\n2️⃣ 指標排序摘要：針對每個指標列出表現最差的 Top 3 微服務（例如：漏洞最多、覆蓋率最低）\n3️⃣ 綜合風險評級（高/中/低）：請依據漏洞數量、技術債比率、覆蓋率，為每個服務給出風險等級評估\n4️⃣ 優化建議列表：每個服務列出至少一項優化建議（如修復漏洞、增加測試、重構代碼等）\n5️⃣ DevOps 系統性建議：\n- 為 ChatOps4Msa-Sample-Bookinfo-Ratings、Productpage、Details 三個測試覆蓋率為 0 的服務，建立單元測試框架，並將 coverage 閾值設為至少 50%，避免測試盲區進入正式環境。\n- 對 bugs 數量超過 2 的 Productpage 和 Reviews 導入 CI 驗證 gate，禁止有已知 bug 的代碼進入主分支。\n- Ratings 專案的技術債比率（2.8%）高於其他服務，建議設立技術債閾值上限（如 2%），並在 PR 檢查流程中納入 sqale_debt_ratio 評估，控制債務成長。\n- 所有服務皆應導入簡單的靜態分析規則（如禁止新增 code smell），並於每日 pipeline 中定期執行 SonarQube 掃描。\n請使用清晰的段落與縮排結構呈現，輸出適合貼在 Discord 中。以下是數據：\n
+            assign: prompt
+        - toolkit-string-convert:
+            object: ${prompt}
+            assign: prompt
+        - toolkit-list-foreach:
+            list: ${sonarqube_project_list}
+            element_name: project_name
+            todo:
+              # service loop
+              - toolkit-restapi-auth_get:
+                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/measures/component?component=${project_name}&metricKeys=ncloc,bugs,vulnerabilities,coverage,code_smells,sqale_index,sqale_debt_ratio
+                  api_token: ${sonarqube_token}
+                  assign: response
+              - toolkit-string-join:
+                  original: ${prompt}
+                  join: ${response}
+                  assign: prompt
+        - toolkit-llm-call:
+            prompt: ${prompt}
+            assign: response
+        - toolkit-discord-text:
+            text: ${response}
+        - toolkit-discord-text:
+            text: ===================================================

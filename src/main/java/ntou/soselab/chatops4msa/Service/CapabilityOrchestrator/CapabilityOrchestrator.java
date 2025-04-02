@@ -87,7 +87,8 @@ public class CapabilityOrchestrator {
                                          Map<String, String> localVariableMap) throws ToolkitFunctionException {
 
         // local variable in todo_function, true_function or false_function (deep copy)
-        Map<String, String> functionListLocalVariableMap = new HashMap<>(localVariableMap);
+        //Map<String, String> functionListLocalVariableMap = new HashMap<>();
+        Map<String, String> functionListLocalVariableMap = localVariableMap;
 
         for (InvokedFunction function : functionList) {
             String functionName = function.getName();

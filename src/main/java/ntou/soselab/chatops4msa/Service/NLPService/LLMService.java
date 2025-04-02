@@ -218,7 +218,46 @@ public class LLMService {
         }
         return completionString;
     }
+    public String callAPIFromOutside(JSONArray promptMessages) {
+        RestTemplate restTemplate = new RestTemplate();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + OPENAI_API_KEY);
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("model", OPENAI_API_MODEL);
+            requestBody.put("temperature", 0);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            requestBody.put("messages", promptMessages);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody.toString(), headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(OPENAI_API_URL, HttpMethod.POST, requestEntity, String.class);
+        String completionString;
+        try {
+            JSONObject completionJSON = new JSONObject(responseEntity.getBody());
+            int usedTokens = completionJSON.getJSONObject("usage").getInt("total_tokens");
+            System.out.println("[Used Token] " + usedTokens);
+            completionString = completionJSON
+                    .getJSONArray("choices")
+                    .getJSONObject(0)
+                    .getJSONObject("message")
+                    .getString("content");
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return completionString;
+    }
     private String loadSystemPrompt(String promptFile) {
         ClassPathResource resource = new ClassPathResource(promptFile);
         byte[] bytes;

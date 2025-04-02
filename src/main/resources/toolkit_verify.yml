@@ -105,3 +105,10 @@ toolkit-list-parallel_execute:
 toolkit-restapi-auth_get:
   - url
   - api_token
+toolkit-string-join:
+  - original
+  - join
+toolkit-string-convert:
+  - object
+toolkit-llm-call:
+  - prompt
