@@ -1,0 +1,199 @@
+[SonarQube 指標說明模板]
+
+---
+
+【Security】
+
+- Security issues
+  定義：程式碼中被偵測到的安全性問題數量（如資安漏洞、危險 API 使用等）。
+  範例：直接在程式中寫入密碼或硬編碼 token 將被視為一項安全性問題。
+
+- Security rating
+  定義：根據安全性問題的嚴重程度評定安全等級（A~E）。
+  範例：存在 blocker 級安全漏洞 → 評級為 E；無高風險漏洞 → 評級為 A。
+
+- Security remediation effort
+  定義：修復所有安全性問題所需的預估時間（以規則設定累計）。
+  範例：存在多個弱加密使用點，總修復工時約為 2 天。
+
+---
+
+【Reliability】
+
+- Reliability issues
+  定義：可能造成程式異常或不穩定的錯誤總數。
+  範例：使用未初始化變數、除以零、遞迴未終止等。
+
+- Reliability rating
+  定義：依據可靠性問題的嚴重程度計算的等級（A~E）。
+  範例：存在 1 個 high 嚴重度錯誤 → 評級為 D。
+
+- Reliability remediation effort
+  定義：修復所有可靠性問題所需的總預估工時。
+  範例：若有多個可能導致 NullPointer 的呼叫點，總成本為 1.5 天。
+
+---
+
+【Maintainability】
+
+- Maintainability issues
+  定義：程式碼可維護性差的情況（Code Smells）數量。
+  範例：過長函數、重複邏輯、未使用變數。
+
+- Technical debt
+  定義：修復所有可維護性問題所需的總估算時間。
+  範例：重構 5 個函數以符合單一職責原則需花費 6 小時。
+
+- Technical debt ratio
+  定義：技術債與整體開發成本的比值（預設每行開發 30 分鐘）。
+  範例：技術債 12 小時 / 開發成本 120 小時 → 比率為 10%。
+
+- Maintainability rating
+  定義：根據技術債比率給出的維護性評等（A ≤ 5%、E ≥ 50%）。
+  範例：比率為 7.2% → 維護等級為 B。
+
+---
+
+【Security Review】
+
+- Security hotspots
+  定義：程式中需要進一步審查的安全敏感點，非直接漏洞。
+  範例：自定義加密實作會被標示為 Hotspot，需要人工確認是否安全。
+
+- Security hotspots reviewed
+  定義：已經確認為安全、已修復或已接受的 Hotspot 百分比。
+  範例：20 個 Hotspot 中已確認 18 個 → 覆蓋率為 90%。
+
+- Security review rating
+  定義：依審查比例評級安全審查完成度（A~E）。
+  範例：80% 以上為 A，30% 以下為 E。
+
+---
+
+【Coverage】
+
+- Coverage
+  定義：單元測試涵蓋度（含行與條件覆蓋）。
+  範例：程式中 100 行可測試程式碼，測試涵蓋其中 80 行與條件 → 覆蓋率 80%。
+
+- Lines to cover
+  定義：理論上可以被測試涵蓋的程式行數。
+  範例：移除空白與註解後，模組中有 240 行可測試邏輯。
+
+- Uncovered lines
+  定義：尚未被測試涵蓋的行數。
+  範例：覆蓋率不足時，此數值會高，例如有 30 行測試未執行。
+
+- Line coverage
+  定義：被測試執行過的行數比例。公式：LC / EL。
+  範例：100 行中有 85 行被測試涵蓋 → 覆蓋率 85%。
+
+- Condition coverage
+  定義：布林條件是否同時測試過 true 與 false。
+  範例：if (a && b) 中的 a 只被測試為 true，b 為 false → 覆蓋不完整。
+
+- Unit tests
+  定義：偵測到的單元測試總數。
+  範例：整體測試框架中註冊的測試方法有 312 項。
+
+- Test errors
+  定義：測試執行時因錯誤中斷的數量（非斷言失敗）。
+  範例：setup 階段出現 NullPointerException 導致測試中斷。
+
+- Test failures
+  定義：測試因預期結果與實際不符而失敗的次數。
+  範例：期望回傳 200，實際得到 500 → 測試失敗。
+
+- Skipped tests
+  定義：被略過執行的測試數量。
+  範例：使用 `@Ignore` 或 `assumeFalse` 導致跳過的測試。
+
+- Test success density
+  定義：測試通過率（通過測試 / 全部測試 × 100%）。
+  範例：100 支測試中有 2 個錯誤與失敗 → 成功率為 98%。
+
+---
+
+【Duplications】
+
+- Duplicated lines
+  定義：被偵測為重複的程式碼行數。
+  範例：3 個檔案中重複貼上了初始化邏輯，共 60 行重複。
+
+- Duplicated lines density
+  定義：重複程式碼行數佔所有程式碼行數的比例（%）。
+  範例：總行數 1000 行，其中 100 行重複 → 10%。
+
+- Duplicated blocks
+  定義：重複程式區塊（符合語言規則定義）的數量。
+  範例：Java 專案中 5 個函數體結構高度相似 → 5 個重複區塊。
+
+- Duplicated files
+  定義：包含重複程式碼的檔案數量。
+  範例：模組中有 7 個檔案含有類似程式結構。
+
+---
+
+【Size】
+
+- Lines of code (ncloc)
+  定義：實際執行用的程式碼行數（非空白與非註解行）。
+  範例：某檔案共 300 行，其中有效程式碼為 210 行。
+
+- Statements
+  定義：執行語句的總數，如呼叫、條件、宣告等。
+  範例：一段函數含 7 條語句。
+
+- Functions
+  定義：函式或方法的數量（依語言定義為單位）。
+  範例：Java 類別中含有 12 個 public/private 方法。
+
+- Classes
+  定義：程式中定義的類別（含 enum、interface、nested 等）。
+  範例：本模組含有 8 個主類別與 3 個內部類別。
+
+- Files
+  定義：所有被分析的原始檔案數量。
+  範例：分析目錄中共有 56 個 *.py 檔案。
+
+- Comment lines
+  定義：程式中的註解行數。
+  範例：整支檔案有 38 行為說明註解或已註解掉程式碼。
+
+- Comment lines density
+  定義：註解佔所有程式碼的比例（%）。
+  範例：註解行數 25，總行數 125 → 註解密度為 20%。
+
+---
+
+【Complexity】
+
+- Cyclomatic complexity
+  定義：控制流程的路徑複雜度。公式：1 + 分支數。
+  範例：if + for + switch 分別算 1 個分支 → 複雜度 = 4。
+
+- Cognitive complexity
+  定義：程式碼的「理解難度」，考慮巢狀、結構與控制流嵌套。
+  範例：深層巢狀 if-else 與多重邏輯條件會提高此指標。
+
+---
+
+【Issues】
+
+- Issues
+  定義：所有已偵測問題的總數，包括 Bug、Vulnerability、Code Smell。
+  範例：目前系統共有 145 項問題，其中 12 個是漏洞。
+
+- Open issues
+  定義：尚未處理或分類的問題數量。
+  範例：有 28 個尚未處理的錯誤待確認。
+
+- Accepted issues
+  定義：被標記為「可接受」的不處理問題。
+  範例：某 code smell 被暫時接受，標記為 accepted。
+
+- False positive issues
+  定義：被人工標示為「誤報」的問題，不列入品質門檻。
+  範例：分析誤認某段安全函式為漏洞，被標記為 false positive。
+
+---

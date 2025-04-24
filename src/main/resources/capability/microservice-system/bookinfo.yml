@@ -69,3 +69,4 @@ capability:
   - use-composite_service-service_error_set_rollback_issue
   - get-sonarqube-technical_debt
   - get-sonarqube-microservice_quality
+  - get-sonarqube-metric_explanation

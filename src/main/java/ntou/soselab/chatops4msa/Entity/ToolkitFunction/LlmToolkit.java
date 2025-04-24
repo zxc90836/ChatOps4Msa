@@ -4,42 +4,67 @@ import ntou.soselab.chatops4msa.Service.NLPService.LLMService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.json.JSONArray;
+import org.springframework.util.FileCopyUtils;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 /**
  * Rename certain parameters to avoid conflicts with reserved keywords.
  * Implement toolkit-flow-return inside CapabilityOrchestrator.
  */
 @Component
 public class LlmToolkit {
+
     private final LLMService llmService;
+
     @Autowired
     public LlmToolkit(LLMService llmService) {
         this.llmService = llmService;
     }
-    /**
-     *
-     * @param prompt context for gpt
-     * @return gpt response
-     */
-    public String toolkitLlmCall(String prompt) {
-        try {
-            // 建立 JSON 陣列來存儲對話歷史
-            JSONArray messages = new JSONArray();
 
-            // 添加使用者訊息
+    /**
+     * @param prompt           The user input content for LLM
+     * @param prompt_template  Template file name under resources/prompts (without .txt extension)
+     * @return LLM response string
+     */
+    public String toolkitLlmCall(String prompt, String prompt_template) {
+        try {
+            JSONArray messages = new JSONArray();
+            String fullPrompt = prompt;
+
+            if (prompt_template != null && !prompt_template.isBlank() && !prompt_template.equalsIgnoreCase("none")) {
+                String promptFilePath = "prompts/" + prompt_template + ".txt";
+                ClassPathResource resource = new ClassPathResource(promptFilePath);
+                if (resource.exists()) {
+                    String template = loadSystemPrompt(promptFilePath);
+                    fullPrompt = template + "\n" + prompt;
+                    System.out.println("[INFO] Prompt template loaded: " + promptFilePath);
+                    System.out.println("[INFO] Prompt template loaded: " + fullPrompt);
+                } else {
+                    System.out.println("[WARN] Prompt template file not found: " + promptFilePath);
+                }
+            }
+
             JSONObject userMessage = new JSONObject();
             userMessage.put("role", "user");
-            userMessage.put("content", prompt);
-
-            // 將使用者訊息加入 JSON 陣列
+            userMessage.put("content", fullPrompt);
             messages.put(userMessage);
 
-            // 呼叫 GPT API，傳遞 `JSONArray`
             return llmService.callAPIFromOutside(messages);
 
-        } catch (JSONException e) {
-            throw new RuntimeException("JSON 格式錯誤", e);
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException("Toolkit LLM error occurred while generating prompt.", e);
         }
     }
+
+    private String loadSystemPrompt(String promptFile) throws IOException {
+        ClassPathResource resource = new ClassPathResource(promptFile);
+        byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
 }
+
+

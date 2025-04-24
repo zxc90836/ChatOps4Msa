@@ -112,3 +112,4 @@ toolkit-string-convert:
   - object
 toolkit-llm-call:
   - prompt
+  - prompt_template
