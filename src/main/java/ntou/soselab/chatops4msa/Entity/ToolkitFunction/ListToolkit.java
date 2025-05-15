@@ -78,6 +78,39 @@ public class ListToolkit extends ToolkitFunction {
             throw new ToolkitFunctionException(e.getOriginalMessage());
         }
     }
+    /**
+     * Extract a sublist (slice) from a JSON array string using start and end index.
+     * If start < 0, it will be set to 0.
+     * If end >= array.length, it will be set to array.length - 1.
+     * If start > end, it will return an empty list.
+     *
+     * @param list  JSON array string, e.g., [[1,"a"],[2,"b"],[3,"c"]]
+     * @param start the starting index (inclusive), e.g., 1
+     * @param end   the ending index (inclusive), e.g., 3
+     * @return JSON array string of the sliced sublist
+     * @throws ToolkitFunctionException if parsing fails
+     */
+    public String toolkitListSlice(String list, String start, String end) throws ToolkitFunctionException {
+        try {
+            String[][] array = objectMapper.readValue(list, String[][].class);
+            int startIndex = Integer.parseInt(start);
+            int endIndex = Integer.parseInt(end);
+
+            if (startIndex < 0) startIndex = 0;
+            if (endIndex >= array.length) endIndex = array.length - 1;
+            if (startIndex > endIndex) return "[]"; // 合理空 slice
+
+            List<String[]> result = new ArrayList<>();
+            for (int i = startIndex; i <= endIndex; i++) {
+                result.add(array[i]);
+            }
+
+            return objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException | NumberFormatException e) {
+            throw new ToolkitFunctionException("Error parsing list or index: " + e.getMessage());
+        }
+    }
+
 
     /**
      * execute the todo_function synchronously

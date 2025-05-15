@@ -70,3 +70,4 @@ capability:
   - get-sonarqube-technical_debt
   - get-sonarqube-microservice_quality
   - get-sonarqube-metric_explanation
+  - get-sonarqube-high_maintainability_issues

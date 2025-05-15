@@ -113,3 +113,10 @@ toolkit-string-convert:
 toolkit-llm-call:
   - prompt
   - prompt_template
+toolkit-list-slice:
+  - list
+  - start
+  - end
+toolkit-llm-table_search:
+  - query_text
+  - table_name

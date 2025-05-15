@@ -44,55 +44,195 @@ low_code:
       description: get microservice quality by sonarqube and llm
       access: public
       body:
-        # all service
         - toolkit-info-get:
             system: ${microservice_system_name}
             service: all_service
             info: sonarqube_project
             assign: sonarqube_project_list
+
         - toolkit-flow-value_to_local:
-            value: 你是一位軟體品質分析師。根據以下來自系統中多個微服務的 SonarQube 資料，請提供一份綜合性的分析。\n\n請完成以下任務：\n1. 識別哪些微服務具有最高風險。\n2. 建議哪些服務需要立即重構或增加測試。\n3. 總結整體的程式碼品質與可維護性狀況。\n4. 提出具體性的建議不要過於空泛或是開闊的提議。\n\n每個服務都包含以下指標：\n- ncloc：程式碼行數\n- bugs：錯誤數量\n- vulnerabilities：弱點數量\n- code_smells：程式碼異味數量\n- coverage：單元測試覆蓋率（百分比）\n- sqale_index：技術債償還時間（分鐘）\n- sqale_debt_ratio：技術債比例（百分比）\n\n以下是資料：\n\n
+            value: 你是一位微服務架構品質分析專家。請根據以下 SonarQube 指標與高嚴重性問題分析系統的品質風險與改善策略：\n\n請依下列格式彙整建議：\n1. 微服務間品質差異分析\n2. 共同問題與技術債模式\n3. 重構與模組劃分建議\n4. 系統性風險與可持續發展評估\n\n以下是資料摘要：\n
             assign: prompt
+
         - toolkit-string-convert:
             object: ${prompt}
             assign: prompt
+
         - toolkit-list-foreach:
             list: ${sonarqube_project_list}
             element_name: project_name
             todo:
-              # service loop
               - toolkit-restapi-auth_get:
-                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/measures/component?component=${project_name}&metricKeys=ncloc,bugs,vulnerabilities,coverage,code_smells,sqale_index,sqale_debt_ratio
+                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/measures/component?component=${project_name}&metricKeys=ncloc,bugs,vulnerabilities,coverage,code_smells,sqale_index,sqale_debt_ratio,duplicated_lines_density,complexity,reliability_rating,security_rating
                   api_token: ${sonarqube_token}
-                  assign: response
+                  assign: metric_response
+
+              - toolkit-restapi-auth_get:
+                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/issues/search?componentKeys=${project_name}&severities=CRITICAL&types=CODE_SMELL,BUG,VULNERABILITY
+                  api_token: ${sonarqube_token}
+                  assign: issue_response
+
+              - toolkit-string-join:
+                  original: 📦 專案：${project_name}\n📊 指標：${metric_response}\n🐞 問題：${issue_response}\n\n
+                  join: ""
+                  assign: service_summary
+
               - toolkit-string-join:
                   original: ${prompt}
-                  join: ${response}
+                  join: ${service_summary}
                   assign: prompt
         - toolkit-llm-call:
             prompt: ${prompt}
             prompt_template: none
             assign: response
+
         - toolkit-discord-text:
             text: ${response}
+
         - toolkit-discord-text:
-            text: ===================================================
+            text: ===============================================
+
     - name: get-sonarqube-metric_explanation
       parameter:
         user_question: user_question
       description: get microservice metric explanation
       access: public
       body:
+        - toolkit-llm-call:
+            prompt: |
+              請從以下提問中提取與 SonarQube 指標最相關的技術詞彙、指標名稱或描述詞。只需輸出關鍵詞（例如 coverage、技術債、bugs），可能有多個。
+              提問：${user_question}
+            prompt_template: none
+            assign: extracted_keyword
+
+        - toolkit-llm-table_search:
+            query_text: ${extracted_keyword}
+            table_name: sonarqube_measures_and_metrics
+            assign: matched_results
         - toolkit-flow-value_to_local:
-            value: 根據我提供的文檔完整回答問題，不要超出範圍解釋，包含定義、範例、解釋\n\n
+            value: 使用者問題為：[${user_question}]，根據我提供的文檔完整回答問題，不要超出範圍解釋，包含定義、範例、解釋\n\n以下為預先篩選的SONAR指標解釋，選對的回答，以正常的大段對話回應，不要只有關鍵字：\n
             assign: llm_setting
         - toolkit-string-join:
-            original: ${user_question}
-            join: ${llm_setting}
+            original: ${llm_setting}
+            join: ${matched_results}
             assign: prompt
         - toolkit-llm-call:
             prompt: ${prompt}
-            prompt_template: sonarqube_measures_and_metrics
+            prompt_template: none
             assign: response
         - toolkit-discord-text:
-            text: ${response}
+            text: --------------${prompt}
+        - toolkit-discord-text:
+            text: ==============${response}
+    - name: get-sonarqube-high_maintainability_issues
+      parameter:
+        project_name: project name
+      description: Get all CRITICAL and MAJOR maintainability (code smell) issues for a given SonarQube project, and use LLM to suggest fixes.
+      access: public
+      body:
+        - toolkit-restapi-auth_get:
+            url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/issues/search?componentKeys=${project_name}&types=CODE_SMELL&severities=CRITICAL,MAJOR
+            api_token: ${sonarqube_token}
+            assign: issue_response
+
+        - toolkit-json-parse:
+            json: ${issue_response}
+            jsonpath: $.issues[*]
+            assign: issue_list
+
+        - toolkit-flow-value_to_local:
+            value: 【專案名稱】\n${project_name}\n
+            assign: full_summary
+
+        - toolkit-list-foreach:
+            list: ${issue_list}
+            element_name: issue
+            todo:
+              - toolkit-json-parse:
+                  json: ${issue}
+                  jsonpath: $.rule
+                  assign: rule_key
+
+              - toolkit-json-parse:
+                  json: ${issue}
+                  jsonpath: $.message
+                  assign: issue_message
+
+              - toolkit-json-parse:
+                  json: ${issue}
+                  jsonpath: $.component
+                  assign: component_key
+
+              - toolkit-json-parse:
+                  json: ${issue}
+                  jsonpath: $.line
+                  assign: line_number
+
+              - toolkit-math-calculate:
+                  expression: ${line_number} - 1
+                  assign: min_line
+
+              - toolkit-restapi-auth_get:
+                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/rules/show?key=${rule_key}
+                  api_token: ${sonarqube_token}
+                  assign: rule_response
+
+              - toolkit-json-parse:
+                  json: ${rule_response}
+                  jsonpath: $.rule.descriptionSections[?(@.key=='how_to_fix')].content
+                  assign: rule_description
+
+              - toolkit-restapi-auth_get:
+                  url: https://zhao-chatops4msa-sonarqube.soselab.tw/api/sources/show?key=${component_key}
+                  api_token: ${sonarqube_token}
+                  assign: code_response
+
+              - toolkit-json-parse:
+                  json: ${code_response}
+                  jsonpath: $.sources[*]
+                  assign: code_list
+
+              - toolkit-list-slice:
+                  list: ${code_list}
+                  start: ${min_line}
+                  end: ${min_line}
+                  assign: sliced_code_list
+
+              - toolkit-json-parse:
+                  json: ${sliced_code_list}
+                  jsonpath: $[*][1]
+                  assign: sliced_code_lines
+
+              - toolkit-string-join:
+                  original: ${sliced_code_lines}
+                  join: "\n"
+                  assign: code_snippet
+
+              - toolkit-flow-value_to_local:
+                  value: 【檔案與位置】\n${component_key} 第 ${line_number} 行\n【問題說明】\n${issue_message}\n【違規規則建議】\n${rule_description}\n【程式碼區段】\n${code_snippet}\n\n
+                  assign: issue_summary
+
+              - toolkit-string-join:
+                  original: ${full_summary}
+                  join: ${issue_summary}
+                  assign: full_summary
+
+        - toolkit-flow-value_to_local:
+            value: 你是一位資深的軟體品質分析顧問。以下是來自 SonarQube 掃描的多筆高風險可維護性問題，若出現問題的區段相同放在一起說明，請進行綜合分析並提出重構與修復建議：\n\n${full_summary}\n請統整重複模式、重構重點、常見命名錯誤、模組設計問題等，提出具體改善策略，注意給予的資訊不會呈現在使用者ui，所以請在修改建議前加上錯誤問題數量與位置。
+            assign: llm_prompt
+
+        - toolkit-string-convert:
+            object: ${llm_prompt}
+            assign: llm_prompt
+
+        - toolkit-llm-call:
+            prompt: ${llm_prompt}
+            prompt_template: none
+            assign: llm_response
+
+        - toolkit-discord-text:
+            text: |
+              🔧 **綜合修復建議報告**
+              📦 專案：${project_name}
+              💡 建議內容：
+              ${llm_response}
