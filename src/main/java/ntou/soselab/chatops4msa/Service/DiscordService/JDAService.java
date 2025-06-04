@@ -7,10 +7,13 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.FileUpload;
 import ntou.soselab.chatops4msa.Exception.DiscordIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
 
 @Service
 public class JDAService {
@@ -97,5 +100,11 @@ public class JDAService {
 
     public void sendChatOpsChannelEmbedMessage(MessageEmbed embedMessage) {
         chatOpsChannel.sendMessageEmbeds(embedMessage).queue();
+    }
+    public void sendChatOpsChannelFile(String filename, InputStream inputStream) {
+        TextChannel channel = jda.getTextChannelById(CHATOPS_CHANNEL_ID);
+        if (channel != null) {
+            channel.sendFiles(FileUpload.fromData(inputStream, filename)).queue();
+        }
     }
 }

@@ -76,7 +76,6 @@ low_code:
                   original: 📦 專案：${project_name}\n📊 指標：${metric_response}\n🐞 問題：${issue_response}\n\n
                   join: ""
                   assign: service_summary
-
               - toolkit-string-join:
                   original: ${prompt}
                   join: ${service_summary}
@@ -110,7 +109,7 @@ low_code:
             table_name: sonarqube_measures_and_metrics
             assign: matched_results
         - toolkit-flow-value_to_local:
-            value: 使用者問題為：[${user_question}]，根據我提供的文檔完整回答問題，不要超出範圍解釋，包含定義、範例、解釋\n\n以下為預先篩選的SONAR指標解釋，選對的回答，以正常的大段對話回應，不要只有關鍵字：\n
+            value: 使用者問題為：[${user_question}]，根據我提供的文檔完整回答問題，不要超出範圍解釋，包含定義、範例、解釋\n\n以下為預先篩選的SONAR指標解釋，選對的回答，完整回應格式，以正常的大段對話回應，不要只有關鍵字：\n
             assign: llm_setting
         - toolkit-string-join:
             original: ${llm_setting}
@@ -120,8 +119,6 @@ low_code:
             prompt: ${prompt}
             prompt_template: none
             assign: response
-        - toolkit-discord-text:
-            text: --------------${prompt}
         - toolkit-discord-text:
             text: ==============${response}
     - name: get-sonarqube-high_maintainability_issues
