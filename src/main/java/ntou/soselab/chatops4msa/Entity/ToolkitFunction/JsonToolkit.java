@@ -16,17 +16,28 @@ public class JsonToolkit extends ToolkitFunction {
 
     public String toolkitJsonParse(String json, String jsonpath) {
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = null;
+        String jsonString = "";
+
         try {
             Object jsonpathResult = JsonPath.parse(json).read(jsonpath);
             jsonString = objectMapper.writeValueAsString(jsonpathResult);
+
+            if (jsonString.startsWith("\"")) {
+                jsonString = jsonString.replaceAll("\"", "");
+            }
+
+        } catch (PathNotFoundException e) {
+            // 對 JSON 中缺少欄位的情況容錯處理
+            System.err.println("JSONPath 不存在: " + jsonpath);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.err.println("JSON 處理失敗: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("未知錯誤: " + e.getMessage());
         }
-        if (jsonString == null) return "";
-        if (jsonString.startsWith("\"")) jsonString = jsonString.replaceAll("\"", "");
+
         return jsonString;
     }
+
 
     /**
      *

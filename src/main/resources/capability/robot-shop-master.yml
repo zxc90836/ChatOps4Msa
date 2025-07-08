@@ -1,0 +1,136 @@
+info:
+  version: 1.0.0
+  title: robot-shop-master Microservices System
+  description: |
+    This is the Robot Shop Master Microservices System, an end-to-end e-commerce demo platform composed of independently deployable services such as cart, catalogue, payment, ratings, and user management. The system includes monitoring, load generation, and storage components, and is designed to simulate a real-world shopping application. Each service is versioned via GitHub and scanned for quality assurance using SonarQube.
+
+
+service:
+  - name: robot-shop-master_cart
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_cart
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_cart
+
+  - name: robot-shop-master_catalogue
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_catalogue
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_catalogue
+
+  - name: robot-shop-master_dispatch
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_dispatch
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_dispatch
+
+  - name: robot-shop-master_fluentd
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_fluentd
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_fluentd
+
+  - name: robot-shop-master_load-gen
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_load-gen
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_load-gen
+
+  - name: robot-shop-master_mongo
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_mongo
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_mongo
+
+  - name: robot-shop-master_mysql
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_mysql
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_mysql
+
+  - name: robot-shop-master_payment
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_payment
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_payment
+
+  - name: robot-shop-master_ratings
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_ratings
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_ratings
+
+#  - name: robot-shop-master_shipping
+#    url: http://example.com
+#    repository: https://github.com/example/robot-shop-master_shipping
+#    description: TBD
+#    scan_run_id: 0000000000
+#    deployment_branch: main
+#    sonarqube_project: robot-shop-master_shipping
+
+  - name: robot-shop-master_user
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_user
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_user
+
+  - name: robot-shop-master_web
+    url: http://example.com
+    repository: https://github.com/example/robot-shop-master_web
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: robot-shop-master_web
+capability:
+  - get-example-echo_message
+  - get-example-hello_message
+  - get-example-math_calculate
+  - get-github-service_recent_activity
+  - get-github-service_code_scanning
+  - get-github-service_past_week_team_activity
+  - get-github-contribution_of_team_member
+  - get-github-issue_progress_timeline
+  - set-github-issue
+  - set-github-trello_issue
+  - set-github-issue_sync_trello
+  - get-prometheus-alert_rule
+  - get-github-service_recent_events
+  #  - get-github-code_network_graph
+  - monitor-prometheus-service_health
+  - monitor-prometheus-grafana_overview
+  - monitor-prometheus-promql_overview
+  - monitor-prometheus-all_service_yesterday_status
+  - monitor-prometheus-service_dependency
+  - test-k6-stress_testing
+  - test-k6-smoke_testing_all_service
+  - test-custom_test-smoke_and_repo_all_service
+  - get-example-new_message
+  - monitor-composite_service-service_error
+  - get-github-info_of_service_branch
+  - get-github-service_cs_and_is
+  - use-composite_service-service_error_set_rollback_issue
+  - get-sonarqube-technical_debt
+  - get-sonarqube-microservice_quality
+  - get-sonarqube-metric_explanation
+  - get-sonarqube-high_maintainability_issues
+  - get-sonarqube-project_followup

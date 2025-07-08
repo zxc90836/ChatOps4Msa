@@ -1,0 +1,137 @@
+info:
+  version: 1.0.0
+  title: google-microservices-demo Microservices System
+  description: |
+    This is the Google Microservices Demo System, consisting of multiple standalone services such as ads, cart, checkout, payment, and more. Each service represents a distinct functionality within a typical e-commerce platform and is independently deployable. All components are scanned by SonarQube and managed via GitHub for quality assurance and version control.
+
+service:
+#  - name: google-microservices-demo_adservice
+#    url: http://example.com
+#    repository: https://github.com/example/google-microservices-demo_adservice
+#    description: TBD
+#    scan_run_id: 0000000000
+#    deployment_branch: main
+#    sonarqube_project: google-microservices-demo_adservice
+
+  - name: google-microservices-demo_cartservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_cartservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_cartservice
+
+  - name: google-microservices-demo_checkoutservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_checkoutservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_checkoutservice
+
+  - name: google-microservices-demo_currencyservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_currencyservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_currencyservice
+
+  - name: google-microservices-demo_emailservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_emailservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_emailservice
+
+  - name: google-microservices-demo_frontend
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_frontend
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_frontend
+
+  - name: google-microservices-demo_loadgenerator
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_loadgenerator
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_loadgenerator
+
+  - name: google-microservices-demo_paymentservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_paymentservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_paymentservice
+
+  - name: google-microservices-demo_productcatalogservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_productcatalogservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_productcatalogservice
+
+  - name: google-microservices-demo_recommendationservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_recommendationservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_recommendationservice
+
+  - name: google-microservices-demo_shippingservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_shippingservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_shippingservice
+
+  - name: google-microservices-demo_shoppingassistantservice
+    url: http://example.com
+    repository: https://github.com/example/google-microservices-demo_shoppingassistantservice
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: google-microservices-demo_shoppingassistantservice
+
+
+capability:
+  - get-example-echo_message
+  - get-example-hello_message
+  - get-example-math_calculate
+  - get-github-service_recent_activity
+  - get-github-service_code_scanning
+  - get-github-service_past_week_team_activity
+  - get-github-contribution_of_team_member
+  - get-github-issue_progress_timeline
+  - set-github-issue
+  - set-github-trello_issue
+  - set-github-issue_sync_trello
+  - get-prometheus-alert_rule
+  - get-github-service_recent_events
+  #  - get-github-code_network_graph
+  - monitor-prometheus-service_health
+  - monitor-prometheus-grafana_overview
+  - monitor-prometheus-promql_overview
+  - monitor-prometheus-all_service_yesterday_status
+  - monitor-prometheus-service_dependency
+  - test-k6-stress_testing
+  - test-k6-smoke_testing_all_service
+  - test-custom_test-smoke_and_repo_all_service
+  - get-example-new_message
+  - monitor-composite_service-service_error
+  - get-github-info_of_service_branch
+  - get-github-service_cs_and_is
+  - use-composite_service-service_error_set_rollback_issue
+  - get-sonarqube-technical_debt
+  - get-sonarqube-microservice_quality
+  - get-sonarqube-metric_explanation
+  - get-sonarqube-high_maintainability_issues
+  - get-sonarqube-project_followup

@@ -1,0 +1,55 @@
+info:
+  version: 1.0.0
+  title: boilerplate-master Microservices System
+  description: |
+    This is the Boilerplate Master Service System, designed to provide foundational backend components such as account management and RESTful APIs. These services serve as reusable templates for scalable system development, each of which is SonarQube-scanned and version-controlled via GitHub.
+
+service:
+  - name: boilerplate-master_account-svc
+    url: http://example.com
+    repository: https://github.com/example/boilerplate-master_account-svc
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: boilerplate-master_account-svc
+
+  - name: boilerplate-master_rest-api-svc
+    url: http://example.com
+    repository: https://github.com/example/boilerplate-master_rest-api-svc
+    description: TBD
+    scan_run_id: 0000000000
+    deployment_branch: main
+    sonarqube_project: boilerplate-master_rest-api-svc
+capability:
+  - get-example-echo_message
+  - get-example-hello_message
+  - get-example-math_calculate
+  - get-github-service_recent_activity
+  - get-github-service_code_scanning
+  - get-github-service_past_week_team_activity
+  - get-github-contribution_of_team_member
+  - get-github-issue_progress_timeline
+  - set-github-issue
+  - set-github-trello_issue
+  - set-github-issue_sync_trello
+  - get-prometheus-alert_rule
+  - get-github-service_recent_events
+  #  - get-github-code_network_graph
+  - monitor-prometheus-service_health
+  - monitor-prometheus-grafana_overview
+  - monitor-prometheus-promql_overview
+  - monitor-prometheus-all_service_yesterday_status
+  - monitor-prometheus-service_dependency
+  - test-k6-stress_testing
+  - test-k6-smoke_testing_all_service
+  - test-custom_test-smoke_and_repo_all_service
+  - get-example-new_message
+  - monitor-composite_service-service_error
+  - get-github-info_of_service_branch
+  - get-github-service_cs_and_is
+  - use-composite_service-service_error_set_rollback_issue
+  - get-sonarqube-technical_debt
+  - get-sonarqube-microservice_quality
+  - get-sonarqube-metric_explanation
+  - get-sonarqube-high_maintainability_issues
+  - get-sonarqube-project_followup

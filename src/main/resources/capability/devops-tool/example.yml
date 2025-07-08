@@ -2,6 +2,37 @@ info:
   version: 1.0.0
   title: example
   description: Just an example for the capability.
+low_code:
+  property:
+    example_token: ${secret.example_token}
+    api_url: https://api.example.com/metrics
+
+  operation:
+    - name: get-example-quality-summary
+      description: Retrieve and summarize quality metrics from Example Service
+      access: public
+      parameter:
+        service_name: The name of the example microservice
+      body:
+        - toolkit-restapi-auth_get:
+            url: ${api_url}?service=${service_name}
+            api_token: ${example_token}
+            assign: raw_response
+
+        - toolkit-json-parse:
+            json: ${raw_response}
+            jsonpath: $.metrics
+            assign: metrics_data
+
+        - toolkit-discord-text:
+            text: Service `${service_name}` quality metrics：
+
+        - toolkit-list-foreach:
+            list: ${metrics_data}
+            element_name: metric
+            body:
+              - toolkit-discord-text:
+                  text: ${metric.name}： ${metric.value}
 
 low_code:
   constructor:

@@ -71,3 +71,4 @@ capability:
   - get-sonarqube-microservice_quality
   - get-sonarqube-metric_explanation
   - get-sonarqube-high_maintainability_issues
+  - get-sonarqube-project_followup

@@ -120,3 +120,10 @@ toolkit-list-slice:
 toolkit-llm-table_search:
   - query_text
   - table_name
+toolkit-sonar-project_extract:
+  - project_name
+  - metric_response
+  - issue_response
+toolkit-sonar-score_distribution:
+  - sonar_json
+  - language
