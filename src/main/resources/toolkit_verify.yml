@@ -117,7 +117,7 @@ toolkit-list-slice:
   - list
   - start
   - end
-toolkit-llm-table_search:
+toolkit-llm-rag:
   - query_text
   - table_name
 toolkit-sonar-project_extract:

@@ -53,7 +53,7 @@ low_code:
             value: SonarQube project urls：\n
             assign: SonarQube_project_urls
         - toolkit-flow-value_to_local:
-            value: 你是一位微服務架構品質分析專家。請根據以下 SonarQube 指標與高嚴重性問題分析系統的品質風險與改善策略，其中包含的分數 score 根據 36,000 筆高星 GitHub 專案指標分布計算，愈接近 100 分代表品質愈穩定：\n\n請依下列格式彙整建議：\n1. 微服務間品質差異分析\n2. 共同問題與技術債模式\n3. 重構與模組劃分建議\n4. 系統性風險與可持續發展評估\n\n以下是資料摘要：\n
+            value: 你是一位微服務架構品質分析專家。請根據以下 SonarQube 指標與高嚴重性問題分析系統的品質風險與改善策略，其中包含的分數 score 根據 36,000 筆高星 GitHub 專案指標分布計算，愈接近 100 分代表品質愈穩定：\n\n請依下列格式彙整建議：\n1. 微服務間品質差異分析\n2. 共同問題與技術債模式\n3. 重構與模組劃分建議\n4. 系統性風險與可持續發展評估\n\n以下是資料摘要，請為我隱去coverage相關敘述，我會以.md回傳：\n
             assign: prompt
 
         - toolkit-string-convert:
@@ -86,8 +86,6 @@ low_code:
                   sonar_json: ${cleaned_response}
                   language: python
                   assign: full_score
-              - toolkit-discord-text:
-                  text: ${full_score}
               - toolkit-string-join:
                   original: 專案：${project_name}\n 指標和問題：${full_score}\n\n
                   join: ""
@@ -125,7 +123,7 @@ low_code:
             prompt_template: none
             assign: response
         - toolkit-discord-text:
-            text: ==============${response}
+            text: ${response}
     - name: get-sonarqube-metric_explanation
       parameter:
         user_question: user_question
@@ -139,7 +137,7 @@ low_code:
             prompt_template: none
             assign: extracted_keyword
 
-        - toolkit-llm-table_search:
+        - toolkit-llm-rag:
             query_text: ${extracted_keyword}
             table_name: sonarqube_measures_and_metrics
             assign: matched_results
@@ -255,7 +253,7 @@ low_code:
                   assign: full_summary
 
         - toolkit-flow-value_to_local:
-            value: 你是一位資深的軟體品質分析顧問。以下是來自 SonarQube 掃描的多筆高風險可維護性問題，若出現問題的區段相同放在一起說明，請進行綜合分析並提出重構與修復建議：\n\n${full_summary}\n請統整重複模式、重構重點、常見命名錯誤、模組設計問題等，提出具體改善策略，注意給予的資訊不會呈現在使用者ui，所以請在修改建議前加上錯誤問題數量與位置。
+            value: 你是一位資深的軟體品質分析顧問。以下是來自 SonarQube 掃描的高風險可維護性問題，若出現問題的區段相同放在一起說明，請進行綜合分析並提出重構與修復建議：\n\n${full_summary}\n請統整重複模式、重構重點、常見命名錯誤、模組設計問題等，提出具體改善策略，注意給予的資訊不會呈現在使用者ui，所以請在修改建議前加上錯誤問題數量與位置，我會以.md回傳。
             assign: llm_prompt
         - toolkit-llm-call:
             prompt: ${llm_prompt}
@@ -267,4 +265,6 @@ low_code:
               🔧 **綜合修復建議報告**
               📦 專案：${project_name}
               💡 建議內容：
+        - toolkit-discord-text:
+            text:
               ${llm_response}

@@ -54,7 +54,6 @@ public class DiscordToolkit extends ToolkitFunction {
         if (text.length() <= 1000) {
             jdaService.sendChatOpsChannelMessage(text);
         } else {
-            // 改用傳送檔案方式
             String filename = "response.md";
             InputStream input = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
             jdaService.sendChatOpsChannelFile(filename, input);

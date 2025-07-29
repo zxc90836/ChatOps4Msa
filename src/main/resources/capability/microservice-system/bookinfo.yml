@@ -5,7 +5,7 @@ info:
     It's a Bookinfo Microservices System, which consists of the Ordering, Payment and Notification services.
 
 service:
-  - name: chatops4msa-bookinfo-productpage
+  - name: ChatOps4Msa-Sample-Bookinfo-Productpage
     url: http://192.168.100.35:9080
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Productpage
     description: This is the product page microservice.
@@ -13,7 +13,7 @@ service:
     deployment_branch: main
     sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Productpage
 
-  - name: chatops4msa-bookinfo-reviews
+  - name: ChatOps4Msa-Sample-Bookinfo-Reviews
     url: http://192.168.100.35:9083
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
@@ -21,7 +21,7 @@ service:
     deployment_branch: main
     sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Reviews
 
-  - name: chatops4msa-bookinfo-details
+  - name: ChatOps4Msa-Sample-Bookinfo-Details
     url: http://192.168.100.35:9081
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
@@ -29,7 +29,7 @@ service:
     deployment_branch: main
     sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Details
 
-  - name: chatops4msa-bookinfo-ratings
+  - name: ChatOps4Msa-Sample-Bookinfo-Ratings
     url: http://192.168.100.35:9082
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.

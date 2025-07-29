@@ -43,6 +43,11 @@
   zh_definition: 技術債與整體開發成本的比值（預設每行開發 30 分鐘）。
   zh_example: 技術債 12 小時 / 開發成本 120 小時 → 比率為 10%。
 
+- key: overall_quality_score
+  aliases: [overall score, 品質總分, 綜合品質指數]
+  zh_definition: 根據多項品質指標（如可維護性、可靠性與安全性等）標準化轉換後之加權或平均結果，用於概括微服務專案的整體品質水準。其計算方法參考 Software Code Quality Measurement,Implications from Metric Distributions提出的分布式品質標準化公式，將不同指標轉換為同一分數尺度後進行整合。
+  zh_example: 某服務於多項指標中表現中等偏弱，經轉換後品質總分為 58.6，顯示其整體品質尚待強化。
+
 - key: maintainability_rating
   aliases: [maintainability rating, 可維護性評級]
   zh_definition: 根據技術債比率給出的維護性評等（A ≤ 5%、E ≥ 50%）。

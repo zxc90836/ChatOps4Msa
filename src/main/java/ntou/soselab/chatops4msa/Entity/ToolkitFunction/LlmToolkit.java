@@ -95,7 +95,7 @@ public class LlmToolkit {
             throw new RuntimeException("Toolkit LLM error occurred during prompt generation.", e);
         }
     }
-    public String toolkitLlmTableSearch(String query_text, String table_name) {
+    public String toolkitLlmRag(String query_text, String table_name) {
         try {
             // 載入 YAML 對照表
             String filePath = "prompts/" + table_name + ".txt";
