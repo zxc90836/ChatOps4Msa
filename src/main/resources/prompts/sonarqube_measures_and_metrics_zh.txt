@@ -1,0 +1,201 @@
+- key: security_issues
+  aliases: [security issues, 安全性問題, 資安問題]
+  zh_definition: 程式碼中被偵測到的安全性問題數量（如資安漏洞、危險 API 使用等）。
+  zh_example: 直接在程式中寫入密碼或硬編碼 token 將被視為一項安全性問題。
+
+- key: security_rating
+  aliases: [security rating, 安全等級, 資安評級]
+  zh_definition: 根據安全性問題的嚴重程度評定安全等級（A~E）。
+  zh_example: 存在 blocker 級安全漏洞 → 評級為 E；無高風險漏洞 → 評級為 A。
+
+- key: security_remediation_effort
+  aliases: [security remediation effort, 安全修復時間, 資安技術債]
+  zh_definition: 修復所有安全性問題所需的預估時間（以規則設定累計）。
+  zh_example: 存在多個弱加密使用點，總修復工時約為 2 天。
+
+- key: reliability_issues
+  aliases: [reliability issues, 可靠性問題, bug 錯誤]
+  zh_definition: 可能造成程式異常或不穩定的錯誤總數。
+  zh_example: 使用未初始化變數、除以零、遞迴未終止等。
+
+- key: reliability_rating
+  aliases: [reliability rating, 可靠性評級]
+  zh_definition: 依據可靠性問題的嚴重程度計算的等級（A~E）。
+  zh_example: 存在 1 個 high 嚴重度錯誤 → 評級為 D。
+
+- key: reliability_remediation_effort
+  aliases: [reliability remediation effort, 修復可靠性, 錯誤技術債]
+  zh_definition: 修復所有可靠性問題所需的總預估工時。
+  zh_example: 若有多個可能導致 NullPointer 的呼叫點，總成本為 1.5 天。
+
+- key: maintainability_issues
+  aliases: [maintainability issues, 可維護性問題, code smells]
+  zh_definition: 程式碼可維護性差的情況（Code Smells）數量。
+  zh_example: 過長函數、重複邏輯、未使用變數。
+
+- key: technical_debt
+  aliases: [technical debt, 技術債, sqale_index]
+  zh_definition: 修復所有可維護性問題所需的總估算時間。
+  zh_example: 重構 5 個函數以符合單一職責原則需花費 6 小時。
+
+- key: technical_debt_ratio
+  aliases: [technical debt ratio, 技術債比率, sqale_debt_ratio]
+  zh_definition: 技術債與整體開發成本的比值（預設每行開發 30 分鐘）。
+  zh_example: 技術債 12 小時 / 開發成本 120 小時 → 比率為 10%。
+
+- key: overall_quality_score
+  aliases: [overall score, 品質總分, 綜合品質指數]
+  zh_definition: 根據多項品質指標（如可維護性、可靠性與安全性等）標準化轉換後之加權或平均結果，用於概括微服務專案的整體品質水準。其計算方法參考 Software Code Quality Measurement,Implications from Metric Distributions提出的分布式品質標準化公式，將不同指標轉換為同一分數尺度後進行整合。
+  zh_example: 某服務於多項指標中表現中等偏弱，經轉換後品質總分為 38.6，顯示其整體品質尚待強化。
+
+- key: maintainability_rating
+  aliases: [maintainability rating, 可維護性評級]
+  zh_definition: 根據技術債比率給出的維護性評等（A ≤ 5%、E ≥ 50%）。
+  zh_example: 比率為 7.2% → 維護等級為 B。
+
+- key: coverage
+  aliases: [coverage, 測試涵蓋率]
+  zh_definition: 單元測試涵蓋度（含行與條件覆蓋）。
+  zh_example: 程式中 100 行可測試程式碼，測試涵蓋其中 80 行與條件 → 覆蓋率 80%。
+
+- key: lines_to_cover
+  aliases: [lines to cover, 可涵蓋行數, 測試目標行]
+  zh_definition: 理論上可以被測試涵蓋的程式行數。
+  zh_example: 移除空白與註解後，模組中有 240 行可測試邏輯。
+
+- key: uncovered_lines
+  aliases: [uncovered lines, 未涵蓋程式行, 測試缺口]
+  zh_definition: 尚未被測試涵蓋的行數。
+  zh_example: 覆蓋率不足時，此數值會高，例如有 30 行測試未執行。
+
+- key: line_coverage
+  aliases: [line coverage, 行覆蓋率]
+  zh_definition: 被測試執行過的行數比例。公式：LC / EL。
+  zh_example: 100 行中有 85 行被測試涵蓋 → 覆蓋率 85%。
+
+- key: condition_coverage
+  aliases: [condition coverage, 條件覆蓋率, branch coverage]
+  zh_definition: 布林條件是否同時測試過 true 與 false。
+  zh_example: if (a && b) 中的 a 只被測試為 true，b 為 false → 覆蓋不完整。
+
+- key: tests
+  aliases: [unit tests, tests, 測試總數, 單元測試]
+  zh_definition: 偵測到的單元測試總數。
+  zh_example: 整體測試框架中註冊的測試方法有 312 項。
+
+- key: test_errors
+  aliases: [test errors, 測試錯誤, 錯誤測試]
+  zh_definition: 測試執行時因錯誤中斷的數量（非斷言失敗）。
+  zh_example: setup 階段出現 NullPointerException 導致測試中斷。
+
+- key: test_failures
+  aliases: [test failures, 測試失敗]
+  zh_definition: 測試因預期結果與實際不符而失敗的次數。
+  zh_example: 期望回傳 200，實際得到 500 → 測試失敗。
+
+- key: skipped_tests
+  aliases: [skipped tests, 被略過的測試]
+  zh_definition: 被略過執行的測試數量。
+  zh_example: 使用 `@Ignore` 或 `assumeFalse` 導致跳過的測試。
+
+- key: test_success_density
+  aliases: [test success density, 測試成功率]
+  zh_definition: 測試通過率（通過測試 / 全部測試 × 100%）。
+  zh_example: 100 支測試中有 2 個錯誤與失敗 → 成功率為 98%。
+
+- key: duplicated_lines
+  aliases: [duplicated lines, 重複程式碼行]
+  zh_definition: 被偵測為重複的程式碼行數。
+  zh_example: 3 個檔案中重複貼上了初始化邏輯，共 60 行重複。
+
+- key: duplicated_lines_density
+  aliases: [duplicated lines density, 重複密度]
+  zh_definition: 重複程式碼行數佔所有程式碼行數的比例（%）。
+  zh_example: 總行數 1000 行，其中 100 行重複 → 10%。
+
+- key: duplicated_blocks
+  aliases: [duplicated blocks, 重複區塊]
+  zh_definition: 重複程式區塊（符合語言規則定義）的數量。
+  zh_example: Java 專案中 5 個函數體結構高度相似 → 5 個重複區塊。
+
+- key: duplicated_files
+  aliases: [duplicated files, 重複檔案]
+  zh_definition: 包含重複程式碼的檔案數量。
+  zh_example: 模組中有 7 個檔案含有類似程式結構。
+
+- key: ncloc
+  aliases: [ncloc, lines of code, 有效程式碼行數]
+  zh_definition: 實際執行用的程式碼行數（非空白與非註解行）。
+  zh_example: 某檔案共 300 行，其中有效程式碼為 210 行。
+
+- key: statements
+  aliases: [statements, 語句數, 程式語句]
+  zh_definition: 執行語句的總數，如呼叫、條件、宣告等。
+  zh_example: 一段函數含 7 條語句。
+
+- key: functions
+  aliases: [functions, 函數數量, 方法數]
+  zh_definition: 函式或方法的數量（依語言定義為單位）。
+  zh_example: Java 類別中含有 12 個 public/private 方法。
+
+- key: classes
+  aliases: [classes, 類別數量]
+  zh_definition: 程式中定義的類別（含 enum、interface、nested 等）。
+  zh_example: 本模組含有 8 個主類別與 3 個內部類別。
+
+- key: files
+  aliases: [files, 檔案數量]
+  zh_definition: 所有被分析的原始檔案數量。
+  zh_example: 分析目錄中共有 56 個 *.py 檔案。
+
+- key: comment_lines
+  aliases: [comment lines, 註解行數]
+  zh_definition: 程式中的註解行數。
+  zh_example: 整支檔案有 38 行為說明註解或已註解掉程式碼。
+
+- key: comment_lines_density
+  aliases: [comment lines density, 註解密度]
+  zh_definition: 註解佔所有程式碼的比例（%）。
+  zh_example: 註解行數 25，總行數 125 → 註解密度為 20%。
+
+
+- key: cyclomatic_complexity
+  aliases: [cyclomatic complexity, 邏輯複雜度]
+  zh_definition: 控制流程的路徑複雜度。公式：1 + 分支數。
+  zh_example: if + for + switch 分別算 1 個分支 → 複雜度 = 4。
+
+- key: cognitive_complexity
+  aliases: [cognitive complexity, 認知複雜度]
+  zh_definition: 程式碼的「理解難度」，考慮巢狀、結構與控制流嵌套。
+  zh_example: 深層巢狀 if-else 與多重邏輯條件會提高此指標。
+
+
+- key: issues
+  aliases: [issues, 問題總數]
+  zh_definition: 所有已偵測問題的總數，包括 Bug、Vulnerability、Code Smell。
+  zh_example: 目前系統共有 145 項問題，其中 12 個是漏洞。
+
+- key: open_issues
+  aliases: [open issues, 未處理問題]
+  zh_definition: 尚未處理或分類的問題數量。
+  zh_example: 有 28 個尚未處理的錯誤待確認。
+
+- key: accepted_issues
+  aliases: [accepted issues, 已接受問題]
+  zh_definition: 被標記為「可接受」的不處理問題。
+  zh_example: 某 code smell 被暫時接受，標記為 accepted。
+
+- key: false_positive_issues
+  aliases: [false positives, 誤報問題]
+  zh_definition: 被人工標示為「誤報」的問題，不列入品質門檻。
+  zh_example: 分析誤認某段安全函式為漏洞，被標記為 false positive。
+
+- key: alert_status
+  aliases: [quality gate status, 品質閘門狀態]
+  zh_definition: 品質閘門的總體結果（OK / ERROR）。
+  zh_example: 若新程式碼覆蓋率過低，則會導致狀態為 ERROR。
+
+- key: quality_gate_details
+  aliases: [quality gate details, 品質閘門條件]
+  zh_definition: 每項品質閘門條件的詳細狀態（是否通過）。
+  zh_example: 只有 coverage ≥ 80% 未通過，其餘皆符合品質門檻。

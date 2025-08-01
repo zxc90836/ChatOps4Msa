@@ -149,17 +149,17 @@ public class LlmToolkit {
 
             // 統一扁平輸出（讓 LLM 後續處理）
             if (finalMatches.isEmpty()) {
-                return "⚠️ 無法根據關鍵詞找到對應的指標定義。請確認提問內容是否明確。";
+                return "Unable to find a corresponding metric definition based on the provided keywords. Please make sure the question is clear and specific.\n";
             }
 
             List<String> results = new ArrayList<>();
             for (MatchResult match : finalMatches) {
                 Map<String, Object> item = match.entry;
                 results.add(String.format(
-                        "名稱：%s\n定義：%s\n範例：%s",
+                        "key：%s\ndefinition：%s\nexample：%s",
                         item.get("key"),
-                        item.get("zh_definition"),
-                        item.get("zh_example")
+                        item.get("definition"),
+                        item.get("example")
                 ));
             }
 

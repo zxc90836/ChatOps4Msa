@@ -53,7 +53,7 @@ low_code:
             value: SonarQube project urls：\n
             assign: SonarQube_project_urls
         - toolkit-flow-value_to_local:
-            value: 你是一位微服務架構品質分析專家。請根據以下 SonarQube 指標與高嚴重性問題分析系統的品質風險與改善策略，其中包含的分數 score 根據 36,000 筆高星 GitHub 專案指標分布計算，愈接近 100 分代表品質愈穩定：\n\n請依下列格式彙整建議：\n1. 微服務間品質差異分析\n2. 共同問題與技術債模式\n3. 重構與模組劃分建議\n4. 系統性風險與可持續發展評估\n\n以下是資料摘要，請為我隱去coverage相關敘述，我會以.md回傳：\n
+            value: You are a microservice architecture quality analysis expert。Please analyze the system's quality risks and improvement strategies based on the following SonarQube metrics and high-severity issues。The included score is calculated based on the metric distribution of 36,000 high-star GitHub projects；the closer to 100, the more stable the quality。Please organize the recommendations in the following format：1. Quality Disparity Analysis Across Microservices 2. Common Issues and Technical Debt Patterns 3. Refactoring and Modularization Recommendations 4. Systemic Risk and Sustainability Assessment。The following is a data summary；please exclude any statements related to coverage。I will provide the content in .md format,Please respond in the same language as the user's question。
             assign: prompt
 
         - toolkit-string-convert:
@@ -87,7 +87,7 @@ low_code:
                   language: python
                   assign: full_score
               - toolkit-string-join:
-                  original: 專案：${project_name}\n 指標和問題：${full_score}\n\n
+                  original: project name：${project_name}\n metric and issue：${full_score}\n\n
                   join: ""
                   assign: service_summary
               - toolkit-string-join:
@@ -132,8 +132,7 @@ low_code:
       body:
         - toolkit-llm-call:
             prompt: |
-              請從以下提問中提取與 SonarQube 指標最相關的技術詞彙、指標名稱或描述詞。只需輸出關鍵詞（例如 coverage、技術債、bugs），可能有多個，每個提取出的項目都要有中英文，例如：技術債,Debt...。
-              提問：${user_question}
+              Please extract the technical terms, metric names, or descriptive phrases most relevant to SonarQube indicators from the following question。Only output keywords（e.g., coverage, technical debt, bugs），there may be multiple。Question：${user_question}
             prompt_template: none
             assign: extracted_keyword
 
@@ -142,7 +141,7 @@ low_code:
             table_name: sonarqube_measures_and_metrics
             assign: matched_results
         - toolkit-flow-value_to_local:
-            value: 使用者問題為：[${user_question}]，根據我提供的文檔完整回答問題，不要超出範圍解釋，包含定義、範例、解釋\n\n，完整回應格式，以正常的大段對話回應，不要只有關鍵字，以下為預先篩選的SONAR指標解釋，選對的回答，可能不只一個：\n
+            value: User question is：[${user_question}]，based on the documentation I provided please answer the question completely without going beyond the scope of the information。Include definitions、examples、and explanations。Respond in full natural language, not just keywords。Below are the pre-filtered SONAR metric explanations；select the correct ones to respond with（may be more than one）,Please respond in the same language as the user's question。：
             assign: llm_setting
         - toolkit-string-join:
             original: ${llm_setting}
@@ -171,7 +170,7 @@ low_code:
             assign: issue_list
 
         - toolkit-flow-value_to_local:
-            value: 【專案名稱】\n${project_name}\n
+            value: 【project name】\n${project_name}\n
             assign: full_summary
 
         - toolkit-list-foreach:
@@ -244,7 +243,7 @@ low_code:
                   assign: code_snippet
 
               - toolkit-flow-value_to_local:
-                  value: 【檔案與位置】\n${component_key} 第 ${line_number} 行\n【問題說明】\n${issue_message}\n【違規規則建議】\n${rule_description}\n【程式碼區段】\n${code_snippet}\n\n
+                  value: 【File and Location】\nLine ${line_number} in ${component_key}\n【Issue Description】\n${issue_message}\n【Rule Violation Suggestion】\n${rule_description}\n【Code Snippet】\n${code_snippet}\n
                   assign: issue_summary
 
               - toolkit-string-join:
@@ -253,7 +252,7 @@ low_code:
                   assign: full_summary
 
         - toolkit-flow-value_to_local:
-            value: 你是一位資深的軟體品質分析顧問。以下是來自 SonarQube 掃描的高風險可維護性問題，若出現問題的區段相同放在一起說明，請進行綜合分析並提出重構與修復建議：\n\n${full_summary}\n請統整重複模式、重構重點、常見命名錯誤、模組設計問題等，提出具體改善策略，注意給予的資訊不會呈現在使用者ui，所以請在修改建議前加上錯誤問題數量與位置，我會以.md回傳。
+            value: You are a senior software quality analysis consultant。The following are high-risk maintainability issues from a SonarQube scan。If multiple issues occur in the same code area, please group them together。Conduct a comprehensive analysis and propose refactoring and remediation suggestions：\n\n${full_summary}\nPlease summarize repeated patterns, key refactoring points, common naming issues, and module design problems, and propose specific improvement strategies。Note that the provided information will not be shown in the user interface, so include the number of issues and their locations before giving modification suggestions。I will submit the content in .md format。
             assign: llm_prompt
         - toolkit-llm-call:
             prompt: ${llm_prompt}
@@ -262,9 +261,9 @@ low_code:
 
         - toolkit-discord-text:
             text: |
-              🔧 **綜合修復建議報告**
-              📦 專案：${project_name}
-              💡 建議內容：
+              🔧 **Comprehensive Remediation Recommendation Report** 
+              📦 Project：${project_name} 
+              💡 Recommendation Details：
         - toolkit-discord-text:
             text:
               ${llm_response}
