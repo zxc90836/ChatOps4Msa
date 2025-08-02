@@ -325,3 +325,113 @@ toolkit-discord-embed_image:
   field_json: <<embed content in JSON format>>
   image: <<image url>>
 ```
+
+### create a Trello card
+Create a new card in a specified Trello board and list.
+
+```yml
+toolkit-trello-create_card:
+  board_id: <<board_id>>        # The Trello board ID
+  list_name: <<list_name>>      # The name of the list to put the card in
+  card_name: <<card_name>>      # Title of the Trello card
+  card_desc: <<card_desc>>      # Description of the card
+```
+
+---
+
+### run multiple tasks in parallel
+Execute a list of toolkit tasks simultaneously.
+
+```yml
+toolkit-list-parallel_execute:
+  tasks: <<tasks>>              # List of task objects to run in parallel
+```
+
+---
+
+### send authenticated REST API GET request
+Send a GET request to an API with token-based authentication.
+
+```yml
+toolkit-restapi-auth_get:
+  url: <<url>>                  # Full API endpoint URL
+  api_token: <<api_token>>      # Bearer token or other API token
+```
+
+---
+
+### join strings with a delimiter
+Combine a list of strings using a specified separator.
+
+```yml
+toolkit-string-join:
+  original: <<original>>        # List of strings
+  join: <<join>>                # Join character(s), e.g., "," or "\n"
+```
+
+---
+
+### convert object to string
+Convert any value (object, list, number) into a string.
+
+```yml
+toolkit-string-convert:
+  object: <<object>>            # Input object to convert
+```
+
+---
+
+### call LLM with optional prompt template
+Call an LLM with a plain prompt or a prompt + template combo.
+
+```yml
+toolkit-llm-call:
+  prompt: <<prompt>>                      # Main prompt content
+  prompt_template: <<prompt_template>>    # Optional template file name
+```
+
+---
+
+### slice a list
+Extract a sublist from a given list using start and end indices.
+
+```yml
+toolkit-list-slice:
+  list: <<list>>              # Full list to be sliced
+  start: <<start>>            # Starting index (inclusive)
+  end: <<end>>                # Ending index (exclusive)
+```
+
+---
+
+### query from LLM-based RAG table
+Use a language model to answer questions based on a specific table.
+
+```yml
+toolkit-llm-rag:
+  query_text: <<query_text>>      # User's query
+  table_name: <<table_name>>      # Predefined table for RAG
+```
+
+---
+
+### extract SonarQube project data
+Extract raw metric and issue data from a SonarQube project.
+
+```yml
+toolkit-sonar-project_extract:
+  project_name: <<project_name>>          # SonarQube project key or name
+  metric_response: <<metric_response>>    # JSON response from metrics API
+  issue_response: <<issue_response>>      # JSON response from issues API
+```
+
+---
+
+### calculate SonarQube score distribution
+Compute quality scores by language from SonarQube JSON data.
+
+```yml
+toolkit-sonar-score_distribution:
+  sonar_json: <<sonar_json>>      # Full analysis JSON from SonarQube
+  language: <<language>>          # Programming language name
+```
