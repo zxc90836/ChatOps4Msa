@@ -16,18 +16,43 @@ public class JsonToolkit extends ToolkitFunction {
 
     public String toolkitJsonParse(String json, String jsonpath) {
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = null;
+        String jsonString = "";
+
         try {
             Object jsonpathResult = JsonPath.parse(json).read(jsonpath);
             jsonString = objectMapper.writeValueAsString(jsonpathResult);
+
+            if (jsonString.startsWith("\"")) {
+                jsonString = jsonString.replaceAll("\"", "");
+            }
+
+        } catch (PathNotFoundException e) {
+            // 對 JSON 中缺少欄位的情況容錯處理
+            System.err.println("JSONPath 不存在: " + jsonpath);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.err.println("JSON 處理失敗: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("未知錯誤: " + e.getMessage());
         }
-        if (jsonString == null) return "";
-        if (jsonString.startsWith("\"")) jsonString = jsonString.replaceAll("\"", "");
+
         return jsonString;
     }
 
+
+    /**
+     *
+     * @param json "Test"
+     * @return "test"
+     */
+    public String toolkitJsonLowercase(String json) {
+//        檢查 originalString 是否為 null
+        if (json == null) {
+            throw new IllegalArgumentException("originalString cannot be null");
+        }
+        String lowercaseString = json.toLowerCase();
+        System.out.println(lowercaseString);
+        return lowercaseString;
+    }
     /**
      * Writing "Github" intentionally instead of "GitHub" is for the convenience of function name conversion.
      */
@@ -45,6 +70,32 @@ public class JsonToolkit extends ToolkitFunction {
                 object.put("author", author.get(i));
                 object.put("message", message.get(i));
                 object.put("url", url.get(i));
+                object.put("date", date.get(i));
+                array.put(object);
+            }
+
+            return array.toString();
+
+        } catch (PathNotFoundException e) {
+            e.printStackTrace();
+            throw new ToolkitFunctionException(e.getLocalizedMessage());
+        }
+    }
+    /**/
+    public String toolkitJsonParseGithubEvent(String json, String first) throws ToolkitFunctionException {
+        try {
+            int length = Integer.parseInt(first) + 1;
+            List<String> author = JsonPath.parse(json).read("$[0:" + length + "].actor.login");
+            List<String> message = JsonPath.parse(json).read("$[0:" + length + "].type");
+            /*List<String> url = JsonPath.parse(json).read("$[0:" + length + "].html_url");*/
+            List<String> date = JsonPath.parse(json).read("$[0:" + length + "].created_at");
+
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < author.size(); i++) {
+                JSONObject object = new JSONObject();
+                object.put("author", author.get(i));
+                object.put("message", message.get(i));
+                /*object.put("url", url.get(i));*/
                 object.put("date", date.get(i));
                 array.put(object);
             }

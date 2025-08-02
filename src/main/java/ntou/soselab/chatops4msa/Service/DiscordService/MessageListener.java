@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 
 @Service
@@ -55,7 +54,7 @@ public class MessageListener extends ListenerAdapter {
             System.out.println("[DEBUG] Receive Message");
             System.out.println("[User Name] " + userName);
             System.out.println("[User Input] " + userInput);
-
+            UserContextHolder.setUserId(userId);  // 設置 userId
             try {
                 MessageCreateData response = dialogueTracker.sendMessage(userId, userName, userInput);
                 event.getChannel().sendMessage(response).queue();

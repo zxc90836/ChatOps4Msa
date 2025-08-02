@@ -5,8 +5,10 @@ info:
 
 
 low_code:
+
   property:
     prometheus_host_url: ${secret.prometheus_host_url}
+
   operation:
     - name: use-composite_service-service_error_set_rollback_issue
       parameter: null
@@ -22,6 +24,14 @@ low_code:
             assign: alerts_list
         - toolkit-list-is_empty:
             list: ${alerts_list}
+
+        - monitor-prometheus-service_health: null
+        - toolkit-flow-value_to_local:
+            value: ${monitor-prometheus-service_health}
+            assign: server_list
+        - toolkit-list-is_empty:
+            list: ${server_list}
+
             assign: is_success
         - toolkit-flow-if:
             condition: ${is_success}
@@ -29,14 +39,12 @@ low_code:
               - toolkit-discord-embed:
                   title: The health status of all the services
                   color: green
-                  field_json: "{\"status\":\"Inactive\"}"
+                  field_json: "{\"status\":\"monitor-prometheus-service_health Inactive\"}"
+              - toolkit-flow-return:
+                  return: ${is_success}
             false:
-              - toolkit-json-parse:
-                  json: ${toolkit-restapi-get} Service Termination
-                  jsonpath: $.data.alerts
-                  assign: alerts_list
               - toolkit-list-foreach:
-                  list: ${alerts_list}
+                  list: ${server_list}
                   element_name: alert
                   todo:
                     - toolkit-json-parse:
@@ -53,3 +61,39 @@ low_code:
                         service_name: ${service_name}
                         issue_title: "Rollback Request"
                         issue_message: "Rollback Request: ${service_name} Service Outage Post-Deployment."
+    - name: monitor-composite_service-service_error
+      parameter: null
+      description: |
+        Monitor the service error of all the services.
+      access: public
+      body:
+        - monitor-prometheus-service_health: null
+        - toolkit-flow-value_to_local:
+            value: ${monitor-prometheus-service_health}
+            assign: server_list
+        - toolkit-list-is_empty:
+            list: ${server_list}
+            assign: is_success
+        - toolkit-flow-if:
+            condition: ${is_success}
+            true:
+              - toolkit-discord-embed:
+                    title: The health status of all the services
+                    color: green
+                    field_json: "{\"status\":\"monitor-prometheus-service_health Inactive\"}"
+              - toolkit-flow-return:
+                  return: ${is_success}
+            false:
+              - toolkit-list-foreach:
+                  list: ${server_list}
+                  element_name: alert
+                  todo:
+                    - toolkit-json-parse:
+                        json: ${alert}
+                        jsonpath: $.labels.name
+                        assign: service_name
+                    - toolkit-discord-text:
+                        text: ${service_name}
+                    - get-github-service_recent_activity:
+                        service_name: ${service_name}
+                        number_of_activity: 3

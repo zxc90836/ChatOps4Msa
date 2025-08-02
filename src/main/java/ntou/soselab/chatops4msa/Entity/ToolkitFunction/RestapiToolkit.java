@@ -4,6 +4,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
+
 @Component
 public class RestapiToolkit extends ToolkitFunction {
 
@@ -11,6 +13,17 @@ public class RestapiToolkit extends ToolkitFunction {
         RestTemplate restTemplate = new RestTemplate();
         url = url.replaceAll("\"", "");
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+        return responseEntity.getBody();
+    }
+    public String toolkitRestapiAuthGet(String url, String api_token) {
+        RestTemplate restTemplate = new RestTemplate();
+        url = url.replaceAll("\"", "");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((api_token + ":").getBytes()));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
         return responseEntity.getBody();
     }
 

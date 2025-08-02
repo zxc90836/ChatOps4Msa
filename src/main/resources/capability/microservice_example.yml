@@ -1,0 +1,30 @@
+info:
+  version: <version_number>
+  title: <system_name>
+  description: |
+    <system_description_multiline_text>
+
+service:
+  - name: <service_name>
+    url: <service_endpoint_url>
+    repository: <source_code_repository_url>
+    description: <service_description_text>
+    scan_run_id: <sonarqube_scan_id>
+    deployment_branch: <default_branch>
+    sonarqube_project: <sonarqube_project_key>
+
+  - name: <service_name>
+    url: <service_endpoint_url>
+    repository: <source_code_repository_url>
+    description: <service_description_text>
+    scan_run_id: <sonarqube_scan_id>
+    deployment_branch: <default_branch>
+    sonarqube_project: <sonarqube_project_key>
+
+
+capability:
+  - <capability_function_name_1>
+  - <capability_function_name_2>
+  - ...
+
+

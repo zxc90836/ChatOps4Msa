@@ -5,32 +5,43 @@ info:
     It's a Bookinfo Microservices System, which consists of the Ordering, Payment and Notification services.
 
 service:
-  - name: chatops4msa-bookinfo-productpage
+  - name: ChatOps4Msa-Sample-Bookinfo-Productpage
     url: http://192.168.100.35:9080
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Productpage
     description: This is the product page microservice.
     scan_run_id: 5947043944
     deployment_branch: main
-  - name: chatops4msa-bookinfo-reviews
+    sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Productpage
+
+  - name: ChatOps4Msa-Sample-Bookinfo-Reviews
     url: http://192.168.100.35:9083
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Reviews
     description: This is the reviews microservice.
     scan_run_id: 5947038973
+    deployment_branch: main
+    sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Reviews
 
-  - name: chatops4msa-bookinfo-details
+  - name: ChatOps4Msa-Sample-Bookinfo-Details
     url: http://192.168.100.35:9081
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Details
     description: This is the details microservice.
     scan_run_id: 5947014232
+    deployment_branch: main
+    sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Details
 
-  - name: chatops4msa-bookinfo-ratings
+  - name: ChatOps4Msa-Sample-Bookinfo-Ratings
     url: http://192.168.100.35:9082
     repository: https://github.com/zxc90836/ChatOps4Msa-Sample-Bookinfo-Ratings
     description: This is the ratings microservice.
     scan_run_id: 5947028699
+    deployment_branch: main
+    sonarqube_project: ChatOps4Msa-Sample-Bookinfo-Ratings
+
+
 
 capability:
   - get-example-echo_message
+  - get-example-hello_message
   - get-example-math_calculate
   - get-github-service_recent_activity
   - get-github-service_code_scanning
@@ -38,7 +49,11 @@ capability:
   - get-github-contribution_of_team_member
   - get-github-issue_progress_timeline
   - set-github-issue
+  - set-github-trello_issue
+  - set-github-issue_sync_trello
   - get-prometheus-alert_rule
+  - get-github-service_recent_events
+#  - get-github-code_network_graph
   - monitor-prometheus-service_health
   - monitor-prometheus-grafana_overview
   - monitor-prometheus-promql_overview
@@ -48,6 +63,13 @@ capability:
   - test-k6-smoke_testing_all_service
   - test-custom_test-smoke_and_repo_all_service
   - get-example-new_message
-  - monitor-prometheus-service_error
+  - monitor-composite_service-service_error
   - get-github-info_of_service_branch
+  - get-github-service_cs_and_is
   - use-composite_service-service_error_set_rollback_issue
+  - get-sonarqube-technical_debt
+  - get-sonarqube-microservice_quality
+  - get-sonarqube-metric_explanation
+  - get-sonarqube-high_maintainability_issues
+  - get-sonarqube-project_followup
+

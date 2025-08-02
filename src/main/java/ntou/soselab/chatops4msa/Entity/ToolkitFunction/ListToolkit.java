@@ -9,11 +9,13 @@ import ntou.soselab.chatops4msa.Service.CapabilityOrchestrator.CapabilityOrchest
 import ntou.soselab.chatops4msa.Service.DiscordService.JDAService;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * For ease of invocation by the CapabilityOrchestrator,
@@ -62,12 +64,53 @@ public class ListToolkit extends ToolkitFunction {
         String[] array;
         try {
             array = objectMapper.readValue(list, String[].class);
-            int i = Integer.parseInt(index);
-            return array[i];
+            if(index.equals("first")){
+                return array[0];
+            }
+            else if(index.equals("last")){
+                return array[array.length-1];
+            }
+            else {
+                int i = Integer.parseInt(index);
+                return array[i];
+            }
         } catch (JsonProcessingException e) {
             throw new ToolkitFunctionException(e.getOriginalMessage());
         }
     }
+    /**
+     * Extract a sublist (slice) from a JSON array string using start and end index.
+     * If start < 0, it will be set to 0.
+     * If end >= array.length, it will be set to array.length - 1.
+     * If start > end, it will return an empty list.
+     *
+     * @param list  JSON array string, e.g., [[1,"a"],[2,"b"],[3,"c"]]
+     * @param start the starting index (inclusive), e.g., 1
+     * @param end   the ending index (inclusive), e.g., 3
+     * @return JSON array string of the sliced sublist
+     * @throws ToolkitFunctionException if parsing fails
+     */
+    public String toolkitListSlice(String list, String start, String end) throws ToolkitFunctionException {
+        try {
+            String[][] array = objectMapper.readValue(list, String[][].class);
+            int startIndex = Integer.parseInt(start);
+            int endIndex = Integer.parseInt(end);
+
+            if (startIndex < 0) startIndex = 0;
+            if (endIndex >= array.length) endIndex = array.length - 1;
+            if (startIndex > endIndex) return "[]"; // 合理空 slice
+
+            List<String[]> result = new ArrayList<>();
+            for (int i = startIndex; i <= endIndex; i++) {
+                result.add(array[i]);
+            }
+
+            return objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException | NumberFormatException e) {
+            throw new ToolkitFunctionException("Error parsing list or index: " + e.getMessage());
+        }
+    }
+
 
     /**
      * execute the todo_function synchronously
@@ -161,5 +204,58 @@ public class ListToolkit extends ToolkitFunction {
 
         // restore the local variable
         localVariableMap.put(element_name, localVariableTemp);
+    }
+
+    public void toolkitListParallelExecute(List<InvokedFunction> tasksList, Map<String, String> localVariableMap) throws ToolkitFunctionException {
+//        for (InvokedFunction task : tasksList) {
+//            try {
+//                System.out.println("Executing task1: " + task.getName());//
+//                orchestrator.invokeSpecialParameter(tasksList, localVariableMap);
+//
+//            } catch (Exception e) {
+//                System.err.println("Error executing task: " + task.getName());
+//                e.printStackTrace();
+//            }
+//        }
+        ExecutorService executorService = Executors.newFixedThreadPool(tasksList.size());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+        try {
+            // 創建thread任務列表
+            List<Callable<Void>> callables = tasksList.stream().map(task -> (Callable<Void>) () -> {
+                try {
+                    String threadName = Thread.currentThread().getName();
+                    //int sleepTime = (int) (Math.random() * 10) + 1;
+                    System.out.println("Executing task: " + task.getName() + " in thread: " + threadName + " at " + dtf.format(LocalDateTime.now()));
+                    //System.out.println("Task: " + task.getName() + " will sleep for " + sleepTime + " seconds.");
+                    //Thread.sleep(sleepTime * 1000);
+                    // 使用 orchestrator 處理單個 task
+                    orchestrator.invokeSpecialParameter(Collections.singletonList(task), localVariableMap);
+                    System.out.println("Finished task: " + task.getName() + " in thread: " + threadName + " at " + dtf.format(LocalDateTime.now()));
+                } catch (Exception e) {
+                    System.err.println("Error executing task: " + task.getName());
+                    e.printStackTrace();
+                }
+                return null;
+            }).collect(Collectors.toList());
+            // 並行處理
+            List<Future<Void>> futures = executorService.invokeAll(callables);
+            // 等待所有任務完成
+            for (Future<Void> future : futures) {
+                try {
+                    future.get();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new ToolkitFunctionException(e.getMessage());
+                } catch (ExecutionException e) {
+                    throw new ToolkitFunctionException(e.getCause().getMessage());
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new ToolkitFunctionException(e.getMessage());
+        } finally {
+            executorService.shutdown();
+        }
     }
 }

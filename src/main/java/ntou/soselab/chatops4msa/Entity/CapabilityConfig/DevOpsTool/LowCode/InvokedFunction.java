@@ -14,6 +14,7 @@ public class InvokedFunction {
     private List<InvokedFunction> todoList = new ArrayList<>();
     private List<InvokedFunction> trueList = new ArrayList<>();
     private List<InvokedFunction> falseList = new ArrayList<>();
+    private List<InvokedFunction> tasksList = new ArrayList<>();
 
     private transient final StringBuilder errorMessageSb = new StringBuilder();
     private transient final Map<String, List<String>> toolkitVerifyConfigMap;
@@ -52,6 +53,7 @@ public class InvokedFunction {
                 if ("todo".equals(argumentName)) this.todoList = specialargumentFunctionList;
                 else if ("true".equals(argumentName)) this.trueList = specialargumentFunctionList;
                 else if ("false".equals(argumentName)) this.falseList = specialargumentFunctionList;
+                else if ("tasks".equals(argumentName)) this.tasksList = specialargumentFunctionList;
                 else appendArgumentFormatErrorMessage(argumentName);
 
             } else {
@@ -88,6 +90,10 @@ public class InvokedFunction {
         return this.trueList;
     }
 
+    public List<InvokedFunction> getTasksList() {
+        return this.tasksList;
+    }
+
     public boolean hasTrueList() {
         return !trueList.isEmpty();
     }
@@ -111,6 +117,7 @@ public class InvokedFunction {
                 if ("todo".equals(requiredArgument) && todoList != null) continue;
                 if ("true".equals(requiredArgument) && trueList != null) continue;
                 if ("false".equals(requiredArgument) && falseList != null) continue;
+                if ("tasks".equals(requiredArgument) && tasksList != null) continue;
                 errorMessageSb
                         .append(indent)
                         .append("        the argument [")
@@ -125,6 +132,7 @@ public class InvokedFunction {
         verifySpecialArgument("todo", todoList, indent);
         verifySpecialArgument("true", trueList, indent);
         verifySpecialArgument("false", falseList, indent);
+        verifySpecialArgument("tasks", tasksList, indent);
 
         return errorMessageSb.toString();
     }
@@ -161,6 +169,7 @@ public class InvokedFunction {
         variableRetrievalVerifyOfSpecialArgument("todo", todoList, localVariableMap, sb, indent);
         variableRetrievalVerifyOfSpecialArgument("true", trueList, localVariableMap, sb, indent);
         variableRetrievalVerifyOfSpecialArgument("false", falseList, localVariableMap, sb, indent);
+        variableRetrievalVerifyOfSpecialArgument("tasks", tasksList, localVariableMap, sb, indent);
 
         return sb.toString();
     }

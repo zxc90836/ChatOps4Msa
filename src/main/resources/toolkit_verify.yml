@@ -33,7 +33,12 @@ toolkit-list-async:
 toolkit-json-parse:
   - json
   - jsonpath
+toolkit-json-lowercase:
+  - json
 toolkit-json-parse_github_commit:
+  - json
+  - first
+toolkit-json-parse_github_event:
   - json
   - first
 toolkit-info-get:
@@ -42,6 +47,11 @@ toolkit-info-get:
   - info
 toolkit-flow-if:
   - condition
+toolkit-flow-if_string_match:
+  - expectedValue
+  - actualValue
+toolkit-flow-value_to_local:
+  - value
 toolkit-restapi-get:
   - url
 toolkit-restapi-post:
@@ -83,3 +93,37 @@ toolkit-discord-embed_image:
   - color
   - field_json
   - image
+toolkit-discord-get:
+  - text
+toolkit-trello-create_card:
+  - board_id
+  - list_name
+  - card_name
+  - card_desc
+toolkit-list-parallel_execute:
+  - tasks
+toolkit-restapi-auth_get:
+  - url
+  - api_token
+toolkit-string-join:
+  - original
+  - join
+toolkit-string-convert:
+  - object
+toolkit-llm-call:
+  - prompt
+  - prompt_template
+toolkit-list-slice:
+  - list
+  - start
+  - end
+toolkit-llm-rag:
+  - query_text
+  - table_name
+toolkit-sonar-project_extract:
+  - project_name
+  - metric_response
+  - issue_response
+toolkit-sonar-score_distribution:
+  - sonar_json
+  - language

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.util.Objects;
 @Component
 public class StringToolkit extends ToolkitFunction {
 
@@ -22,11 +22,32 @@ public class StringToolkit extends ToolkitFunction {
     }
 
     /**
+     *
+     * @param object any object,like 123, true, null, List, Map
+     * @return string，like "123", "true", "null", "[1, 2, 3]"
+     */
+    public String toolkitStringConvert(Object object) {
+        // 先轉成字串
+        String result = Objects.toString(object, "null");
+        // 轉換 `\n` 字串為真正的換行
+        return result.replace("\\n", "\n");
+    }
+
+    /**
+     * @param original   like "hello world"
+     * @param join like "world2"
+     * @return like "hello world2"
+     */
+    public String toolkitStringJoin(String original, String join) {
+        return original+join;
+    }
+    /**
      * @param string    like "https://github.com/sheng-kai-wang/ChatOps4Msa-Sample-Bookinfo"
      * @param separator like "/"
      * @return like ["https:", "", "github.com", "sheng-kai-wang", "ChatOps4Msa-Sample-Bookinfo"]
      */
-    public String toolkitStringSplit(String string, String separator) throws ToolkitFunctionException {
+    public String toolkitStringSplit(String string, String separator) throws ToolkitFunctionException, InterruptedException {
+        //Thread.sleep(2000);
         string = string.replaceAll("\\[\"", "").replaceAll("\"]", "");
         ObjectMapper objectMapper = new ObjectMapper();
         try {

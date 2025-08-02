@@ -1,0 +1,199 @@
+- key: security_issues
+  aliases: [security issues]
+  definition: Number of detected security issues in the code, such as vulnerabilities or the use of unsafe APIs.
+  example: Hardcoding a password or token in the code is considered a security issue.
+
+- key: security_rating
+  aliases: [security rating]
+  definition: Security rating (A~E) based on the severity of security issues.
+  example: A blocker-level vulnerability results in a rating of E; no high-risk issues results in a rating of A.
+
+- key: security_remediation_effort
+  aliases: [security remediation effort]
+  definition: Estimated total time required to fix all security issues, based on rule configurations.
+  example: Multiple weak encryption usages result in a total remediation effort of 2 days.
+
+- key: reliability_issues
+  aliases: [reliability issues]
+  definition: Total number of errors that could cause program malfunctions or instability.
+  example: Using uninitialized variables, division by zero, or infinite recursion.
+
+- key: reliability_rating
+  aliases: [reliability rating]
+  definition: Rating (A~E) based on the severity of reliability issues.
+  example: One high-severity error results in a rating of D.
+
+- key: reliability_remediation_effort
+  aliases: [reliability remediation effort]
+  definition: Total estimated effort required to fix all reliability issues.
+  example: Several potential NullPointer call sites require around 1.5 days to fix.
+
+- key: maintainability_issues
+  aliases: [maintainability issues, code smells]
+  definition: Number of code smells indicating poor maintainability.
+  example: Long functions, duplicated logic, or unused variables.
+
+- key: technical_debt
+  aliases: [technical debt]
+  definition: Total estimated time required to fix all maintainability issues.
+  example: Refactoring 5 functions to follow the single responsibility principle takes 6 hours.
+
+- key: technical_debt_ratio
+  aliases: [technical debt ratio]
+  definition: Ratio of technical debt to total estimated development time (default：30 minutes per line).
+  example: 12 hours of technical debt / 120 hours of development → 10% ratio.
+
+- key: overall_quality_score
+  aliases: [overall score,quality score,score]
+  definition: A weighted or average score summarizing the overall quality of a microservice project based on normalized metrics such as maintainability, reliability, and security.
+  example: A service shows below-average performance on several metrics, resulting in an overall quality score of 38.6.
+
+- key: maintainability_rating
+  aliases: [maintainability rating]
+  definition: Maintainability rating based on the technical debt ratio (A ≤ 5%, E ≥ 50%).
+  example: A ratio of 7.2% results in a rating of B.
+
+- key: coverage
+  aliases: [coverage]
+  definition: Unit test coverage, including line and condition coverage.
+  example: 80 out of 100 testable lines and conditions are covered → 80% coverage.
+
+- key: lines_to_cover
+  aliases: [lines to cover]
+  definition: Number of code lines theoretically eligible for test coverage.
+  example: After removing blanks and comments, there are 240 lines of testable logic.
+
+- key: uncovered_lines
+  aliases: [uncovered lines]
+  definition: Number of code lines not covered by tests.
+  example: If 30 lines are not tested, the uncovered line count is 30.
+
+- key: line_coverage
+  aliases: [line coverage]
+  definition: Percentage of lines executed during testing. Formula： LC / EL.
+  example: 85 out of 100 lines are covered by tests → 85% line coverage.
+
+- key: condition_coverage
+  aliases: [condition coverage, branch coverage]
+  definition: Whether both true and false branches of Boolean conditions are tested.
+  example: In `if (a && b)`, if only `a = true` and `b = false` is tested → incomplete coverage.
+
+- key: tests
+  aliases: [unit tests, tests]
+  definition: Total number of unit tests detected.
+  example: The test framework contains 312 registered test methods.
+
+- key: test_errors
+  aliases: [test errors]
+  definition: Number of tests interrupted due to errors (not assertion failures).
+  example: A NullPointerException in the setup phase causes the test to error out.
+
+- key: test_failures
+  aliases: [test failures]
+  definition: Number of tests that failed due to assertion mismatch.
+  example: Expected status 200, got 500 → test failure.
+
+- key: skipped_tests
+  aliases: [skipped tests]
+  definition: Number of tests skipped during execution.
+  example: Tests annotated with `@Ignore` or using `assumeFalse` are skipped.
+
+- key: test_success_density
+  aliases: [test success density]
+  definition: Test pass rate (passed tests / total tests × 100%).
+  example: 98 out of 100 tests pass → 98% success density.
+
+- key: duplicated_lines
+  aliases: [duplicated lines]
+  definition: Number of code lines detected as duplicated.
+  example: Initialization logic was copy-pasted across 3 files, totaling 60 duplicated lines.
+
+- key: duplicated_lines_density
+  aliases: [duplicated lines density]
+  definition: Percentage of duplicated lines over total lines of code.
+  example: 100 out of 1000 lines are duplicated → 10% density.
+
+- key: duplicated_blocks
+  aliases: [duplicated blocks]
+  definition: Number of duplicated code blocks as defined by language syntax.
+  example: 5 function bodies in a Java project have nearly identical structure → 5 duplicated blocks.
+
+- key: duplicated_files
+  aliases: [duplicated files]
+  definition: Number of files containing duplicated code.
+  example: 7 files in the module contain similar code structures.
+
+- key: ncloc
+  aliases: [ncloc, lines of code]
+  definition: Number of effective lines of code (excluding blanks and comments).
+  example: A file contains 300 lines in total, with 210 being actual code.
+
+- key: statements
+  aliases: [statements]
+  definition: Total number of executable statements, such as calls, declarations, and conditions.
+  example: A function contains 7 statements.
+
+- key: functions
+  aliases: [functions]
+  definition: Number of functions or methods as defined by the programming language.
+  example: A Java class contains 12 public/private methods.
+
+- key: classes
+  aliases: [classes]
+  definition: Number of classes defined in the code, including enums, interfaces, and nested classes.
+  example: The module contains 8 top-level classes and 3 nested classes.
+
+- key: files
+  aliases: [files]
+  definition: Number of source files analyzed.
+  example: The analysis folder contains 56 `.py` files.
+
+- key: comment_lines
+  aliases: [comment lines]
+  definition: Number of comment lines in the code.
+  example: 38 lines in the file are comments or commented-out code.
+
+- key: comment_lines_density
+  aliases: [comment lines density]
+  definition: Percentage of comment lines over total lines of code.
+  example: 25 comment lines out of 125 total lines → 20% density.
+
+- key: cyclomatic_complexity
+  aliases: [cyclomatic complexity]
+  definition: Complexity of control flow paths. Formula： 1 + number of decision points.
+  example: One `if`, one `for`, and one `switch` → complexity = 4.
+
+- key: cognitive_complexity
+  aliases: [cognitive complexity]
+  definition: A measure of code understandability, considering nesting, structure, and control flow.
+  example: Deeply nested `if-else` blocks with multiple conditions increase cognitive complexity.
+
+- key: issues
+  aliases: [issues]
+  definition: Total number of detected issues, including Bugs, Vulnerabilities, and Code Smells.
+  example: The system currently has 145 issues, including 12 vulnerabilities.
+
+- key: open_issues
+  aliases: [open issues]
+  definition: Number of issues that have not been resolved or triaged.
+  example: There are 28 unresolved errors pending review.
+
+- key: accepted_issues
+  aliases: [accepted issues]
+  definition: Issues marked as accepted and intentionally not fixed.
+  example: A code smell is marked as accepted for now.
+
+- key: false_positive_issues
+  aliases: [false positives]
+  definition: Issues manually marked as false positives and excluded from quality gate thresholds.
+  example: A secure function was mistakenly flagged as a vulnerability and marked as a false positive.
+
+- key: alert_status
+  aliases: [quality gate status]
+  definition: Overall result of the quality gate (OK / ERROR).
+  example: Low coverage on new code causes the quality gate status to be ERROR.
+
+- key: quality_gate_details
+  aliases: [quality gate details]
+  definition: Detailed status of each quality gate condition (pass/fail).
+  example: Only the coverage ≥ 80% condition failed; others passed.

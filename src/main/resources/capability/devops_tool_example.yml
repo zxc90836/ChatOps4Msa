@@ -1,0 +1,33 @@
+info:
+  version: <version_number>
+  title: <module_name>
+  description: <description_of_this_tool_or_composition>
+
+low_code:
+  property:
+    <property_name_1>: <property_value_1>
+
+  operation:
+    - name: <function_name>
+      parameter:
+        <parameter_name>: <description or constraint>
+      description: |
+        <multiline_description_of_function_purpose>
+      access:
+        protected:
+          - <role_name>
+      body:
+        - toolkit-restapi-auth_get:
+            url: https://example.com/api/service?id=${target_id}
+            api_token: ${secret_token}
+            assign: api_response
+        - toolkit-json-parse:
+            json: ${api_response}
+            jsonpath: $.result.data
+            assign: parsed_data
+
+
+
+
+
+
